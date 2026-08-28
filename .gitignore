@@ -89,3 +89,7 @@ yarn-error.log*
 *~
 .DS_Store
 Thumbs.db
+
+# Local prompt / scratch inputs — not part of the project record
+Claude_MD_Prompt.txt
+Redline_First_Decision.txt
