@@ -1,0 +1,26 @@
+I'm building a product called Redline. It reads a contract, lease, freelance
+agreement or terms of service and tells the reader what they're actually
+signing: a plain-English summary, risky clauses ranked by severity with the
+exact source sentence shown, a drafted counter-offer for each one, and a
+question box that answers only from the document.
+That is a hypothesis, not a validated product. Before I write a PRD I want it
+anchored in real pain.
+Run four research agents IN PARALLEL. Use the Sonnet model for every one of
+them. Do not do the research yourself in this session.
+Agent 1, who has this pain: find real people describing being hurt by contract
+terms they did not understand or did not notice. Public forums and communities.
+Capture verbatim quotes and where each one came from.
+Agent 2, what goes wrong: identify the recurring clause types that actually
+burn people. Auto-renewal, unilateral termination, IP assignment, liability
+caps, indemnity, non-competes, fee escalators, and whatever else the evidence
+shows. Rank them by how often they show up in complaints.
+Agent 3, what already exists: find existing contract-review and clause-analysis
+products. For each one, what it does, who it targets, what it charges, and the
+most common complaint about it. Include both free and AI-native ones.
+Agent 4, who would pay: identify the segments feeling this most sharply, and
+any evidence about willingness to pay. Stated prices, what people currently
+spend on a lawyer for this, what they call too expensive.
+Guardrails, for every agent:- Hard cap of 12 web searches and 15 pages read. Stop at whichever comes first.- Stop early once you have 8 distinct sourced findings. More is not better.- Every finding carries a source URL. If you cannot source it, drop it.- Do not speculate to fill gaps. Say what you could not find.- Write only to research/<agent-name>.md. No code, no other files.
+When all four are done, write research/summary.md with:- The three sharpest pain points, each with a real quote and its source- The clause types that matter most, ranked- Where the existing tools are weak- Who would plausibly pay, and roughly what- Anything that contradicts my hypothesis. If the evidence does not support
+building this, say so plainly.
+Then stop and tell me you're done. Do not start designing or building anything.
