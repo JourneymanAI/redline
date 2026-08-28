@@ -46,3 +46,15 @@ This folder is its own git repo (remote: `JourneymanAI/redline`) nested inside t
 
 - `research/summary.md` — the user research; read before deciding what to build.
 - `PRD.md` — the brief; does not exist yet; read before building once it does.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as markdown files under `.scratch/<feature-slug>/` in this
+repo, one file per ticket. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` (once it exists) plus `docs/adr/` at the repo root.
+See `docs/agents/domain.md`.
