@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redline — Result (design comp)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#0f1115;
+    --ground-raised:#171a1f;
+    --paper:#f5f2ea;
+    --paper-dim:#f5f2ea99;
+    --paper-faint:#b0aa98;
+    --rule:#2b2f36;
+    --alert:#d94f30;
+    --alert-ink:#2a0d06;
+    --push:#c8862b;
+    --focus:#e8c14d;
+    --radius:2px;
+    --board-face:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;overflow-x:hidden;}
+  body{
+    background:var(--ground);
+    color:var(--paper);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--alert);color:var(--paper);}
+  ::-webkit-scrollbar{width:12px;height:12px;}
+  ::-webkit-scrollbar-track{background:var(--ground);}
+  ::-webkit-scrollbar-thumb{background:var(--rule);border-radius:6px;border:3px solid var(--ground);}
+  * {scrollbar-color: var(--rule) var(--ground);}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  .mono{
+    font-family:var(--board-face);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:0.01em;
+  }
+
+  .frame{max-width:1180px;margin:0 auto;padding:0 28px 80px;}
+
+  .sample-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    margin:20px 0 0;
+    padding:6px 10px;
+    color:var(--paper-dim);
+    font-size:12px;
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+  }
+  .sample-tag::before{content:"";width:6px;height:6px;background:var(--push);border-radius:50%;flex:none;}
+
+  /* ---- boarding-pass summary strip ---- */
+  .ticket{
+    margin-top:16px;
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    background:var(--ground-raised);
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr auto;
+    align-items:stretch;
+  }
+  .ticket > div{
+    padding:20px 22px;
+    border-right:1px solid var(--rule);
+    min-width:0;
+  }
+  .ticket > div:last-child{border-right:none;}
+  .ticket .field-label{
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--paper-faint);margin:0 0 8px;
+  }
+  .ticket .field-value{margin:0;font-size:17px;line-height:1.3;}
+  .ticket .route{
+    font-size:22px;
+  }
+  .ticket .route .arrow{color:var(--paper-faint);padding:0 8px;font-weight:400;}
+  .ticket .scan{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;
+    padding:16px 20px;
+    min-width:130px;
+  }
+  .scan svg{display:block;height:40px;width:auto;}
+  .scan .code{
+    font-size:10px;letter-spacing:.12em;color:var(--paper-faint);
+  }
+  .disclaimer{
+    color:var(--paper-faint);
+    font-size:13px;
+    margin:14px 2px 0;
+    max-width:70ch;
+    line-height:1.5;
+  }
+  .disclaimer strong{color:var(--paper-dim);font-weight:600;}
+
+  .state-toggle{
+    display:flex;gap:4px;margin:28px 0 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .state-btn{
+    appearance:none;background:transparent;border:none;
+    color:var(--paper-faint);font-family:inherit;font-size:13px;font-weight:600;
+    padding:10px 4px;margin-right:22px;cursor:pointer;
+    border-bottom:2px solid transparent;margin-bottom:-1px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .state-btn:hover{color:var(--paper-dim);}
+  .state-btn.is-active{color:var(--paper);border-bottom-color:var(--paper);}
+
+  .clean-verdict{padding:36px 0 30px;max-width:56ch;}
+  .clean-headline{
+    font-size:28px;font-weight:600;margin:0 0 10px;letter-spacing:-0.01em;
+  }
+  .clean-sub{
+    font-size:15px;line-height:1.6;color:var(--paper-dim);margin:0;
+  }
+
+  /* ---- board ---- */
+  .board-head{
+    display:grid;
+    grid-template-columns:84px 1fr 300px 40px;
+    padding:0 4px;
+    margin:34px 0 6px;
+    color:var(--paper-faint);
+    font-family:var(--board-face);
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .board-head span:last-child{text-align:right;}
+
+  .board{
+    border-top:1px solid var(--rule);
+  }
+  .row{
+    position:relative;
+    display:grid;
+    grid-template-columns:84px 1fr 300px 40px;
+    align-items:center;
+    padding:16px 4px;
+    border-bottom:1px solid var(--rule);
+    background:transparent;
+    cursor:pointer;
+    min-width:0;
+    transition:background-color 2.4s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .row:hover{background:#ffffff08;}
+  .row.held{background:var(--alert);}
+  .row.held .clause,.row.held .sev-label{color:var(--alert-ink);}
+  .row.held .why{color:var(--alert-ink);opacity:.85;}
+
+  .sev{display:flex;align-items:center;height:100%;}
+  .sev-label{
+    font-family:var(--board-face);
+    font-size:12px;font-weight:700;letter-spacing:.04em;
+  }
+  .sev-blocker .sev-label{color:var(--alert);}
+  .sev-push .sev-label{color:var(--push);}
+  .sev-note .sev-label{color:var(--paper-faint);font-weight:600;}
+
+  .clause-col{min-width:0;padding-right:24px;}
+  .clause{font-family:var(--board-face);font-size:15px;font-weight:500;margin:0;letter-spacing:0.01em;}
+  .why{
+    margin:5px 0 0;font-size:13px;color:var(--paper-faint);line-height:1.5;
+    display:flex;align-items:flex-start;gap:6px;
+  }
+  .why .dot{width:5px;height:5px;margin-top:7px;border-radius:50%;background:currentColor;flex:none;}
+
+  .quote-preview{
+    color:var(--paper-faint);
+    font-size:13px;
+    line-height:1.5;
+    padding-right:8px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .chev{
+    justify-self:end;
+    display:flex;
+    color:var(--paper-faint);
+    transition:transform .3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .chev svg{width:14px;height:14px;}
+  .row[aria-expanded="true"] .chev{transform:rotate(90deg);}
+
+  .detail{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .row[aria-expanded="true"] .detail{grid-template-rows:1fr;}
+  .detail-clip{min-height:0;overflow:hidden;}
+  .detail-inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:28px;
+    padding:20px 4px 8px 84px;
+  }
+  .detail h4{
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--paper-faint);margin:0 0 10px;font-weight:600;
+  }
+  blockquote{
+    margin:0;padding:14px 16px;
+    background:var(--ground-raised);
+    border-radius:var(--radius);
+    font-size:14px;line-height:1.6;color:var(--paper);
+    font-style:normal;
+  }
+  .counter{
+    font-size:14px;line-height:1.6;color:var(--paper-dim);margin:0 0 12px;
+  }
+  .copy-btn{
+    appearance:none;border:1px solid var(--rule);background:transparent;color:var(--paper);
+    font-size:13px;padding:8px 14px;border-radius:var(--radius);cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease;
+  }
+  .copy-btn:hover{background:#ffffff10;border-color:var(--paper-faint);}
+  .copy-btn:active{background:#ffffff18;}
+  .copy-btn.copied{border-color:var(--push);color:var(--push);}
+
+  /* ---- also-seen ---- */
+  .also-seen{
+    margin-top:28px;padding:14px 18px;
+    border:1px dashed var(--rule);
+    border-radius:var(--radius);
+    color:var(--paper-faint);
+    font-size:13px;line-height:1.6;
+  }
+  .also-seen strong{color:var(--paper-dim);font-weight:600;}
+
+  /* ---- Q&A transcript ---- */
+  .qa{
+    margin-top:44px;
+    border-top:1px solid var(--rule);
+    padding-top:24px;
+  }
+  .qa h3{
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--paper-faint);margin:0 0 16px;font-weight:600;
+  }
+  .transcript{
+    max-height:260px;overflow-y:auto;
+    padding-right:6px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .qa-turn{max-width:74ch;}
+  .qa-q{
+    font-size:14px;color:var(--paper);margin:0 0 6px;
+  }
+  .qa-q::before{content:"→ ";color:var(--paper-faint);}
+  .qa-a{
+    font-size:14px;line-height:1.6;color:var(--paper-dim);margin:0;
+    padding-left:16px;border-left:1px solid var(--rule);
+  }
+  .qa-a.unaddressed{color:var(--paper-faint);font-style:italic;}
+  .qa-input{
+    margin-top:16px;display:flex;gap:10px;
+  }
+  .qa-input input{
+    flex:1;background:var(--ground-raised);border:1px solid var(--rule);
+    color:var(--paper);padding:12px 14px;border-radius:var(--radius);font-size:14px;
+    font-family:inherit;
+  }
+  .qa-input input::placeholder{color:var(--paper-faint);}
+  .qa-input input:disabled{opacity:.6;}
+  .qa-send{
+    appearance:none;border:1px solid var(--paper-faint);background:transparent;color:var(--paper);
+    padding:0 18px;border-radius:var(--radius);cursor:pointer;font-size:14px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .qa-send:hover{border-color:var(--paper);}
+  .qa-send:disabled{cursor:not-allowed;opacity:.4;border-color:var(--rule);}
+  .qa-pending{
+    font-size:13px;color:var(--paper-faint);font-style:italic;margin:0;
+  }
+
+  @media (max-width:860px){
+    .ticket{grid-template-columns:1fr 1fr;}
+    .ticket .scan{grid-column:1 / -1;}
+    .board-head{grid-template-columns:64px 1fr 0px 32px;}
+    .board-head span:nth-child(3){display:none;}
+    .row{grid-template-columns:64px 1fr 0px 32px;}
+    .quote-preview{display:none;}
+    .detail-inner{grid-template-columns:1fr;padding-left:64px;}
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+
+    <span class="sample-tag">Sample contract: synthetic content for design review, not a real analysis</span>
+
+    <section class="ticket" aria-label="Contract summary">
+      <div>
+        <p class="field-label">Reviewing for</p>
+        <p class="field-value">Acme Bookkeeping LLC</p>
+      </div>
+      <div>
+        <p class="field-label">Route</p>
+        <p class="field-value route mono">CA <span class="arrow">→</span> DE</p>
+      </div>
+      <div>
+        <p class="field-label">Term</p>
+        <p class="field-value">12 months, auto-renews</p>
+      </div>
+      <div>
+        <p class="field-label">You're on the hook for</p>
+        <p class="field-value">$2,400/mo, cloud accounting access</p>
+      </div>
+      <div class="scan" aria-hidden="true">
+        <svg viewBox="0 0 96 40" preserveAspectRatio="none" role="presentation">
+          <rect x="0" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="4" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="7" y="0" width="3" height="40" fill="var(--paper)"/>
+          <rect x="12" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="15" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="19" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="22" y="0" width="4" height="40" fill="var(--paper)"/>
+          <rect x="28" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="31" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="35" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="38" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="41" y="0" width="3" height="40" fill="var(--paper)"/>
+          <rect x="46" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="50" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="53" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="56" y="0" width="4" height="40" fill="var(--paper)"/>
+          <rect x="62" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="66" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="69" y="0" width="3" height="40" fill="var(--paper)"/>
+          <rect x="74" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="77" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="80" y="0" width="2" height="40" fill="var(--paper)"/>
+          <rect x="84" y="0" width="1" height="40" fill="var(--paper)"/>
+          <rect x="87" y="0" width="4" height="40" fill="var(--paper)"/>
+          <rect x="93" y="0" width="1" height="40" fill="var(--paper)"/>
+        </svg>
+        <span class="code mono">RDL-88214-CA</span>
+      </div>
+    </section>
+
+    <p class="disclaimer"><strong>Redline isn't a lawyer</strong> and this isn't legal advice. It read only the text pasted above; every line below points at the exact sentence it came from.</p>
+
+    <div class="state-toggle" role="tablist" aria-label="Preview result state">
+      <button type="button" id="tab-flagged" class="state-btn is-active" data-state="flagged" role="tab" aria-selected="true" aria-controls="flagged-view">Flags found</button>
+      <button type="button" id="tab-clean" class="state-btn" data-state="clean" role="tab" aria-selected="false" aria-controls="clean-view">Clean verdict</button>
+    </div>
+
+    <div id="flagged-view" role="tabpanel" aria-labelledby="tab-flagged">
+
+    <div class="board-head">
+      <span>Severity</span>
+      <span>Flag</span>
+      <span>Source</span>
+      <span></span>
+    </div>
+
+    <div class="board" id="board">
+
+      <div class="row sev-blocker" data-hold="true" tabindex="0" role="button" aria-expanded="false">
+        <div class="sev"><span class="sev-label">BLOCKER</span></div>
+        <div class="clause-col">
+          <p class="clause">Personal guarantee</p>
+          <p class="why"><span class="dot"></span>Crosses your red line: <em>no personal guarantee</em>, flagged regardless of how standard it is</p>
+        </div>
+        <p class="quote-preview">"…the undersigned individual personally guarantees full payment…"</p>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="detail">
+          <div class="detail-clip">
+          <div class="detail-inner">
+            <div>
+              <h4>Exact source sentence</h4>
+              <blockquote>"By executing this Agreement, the undersigned individual personally guarantees full payment of all fees owed by Customer hereunder."</blockquote>
+            </div>
+            <div>
+              <h4>Counter-offer</h4>
+              <p class="counter">"Strike this Section in its entirety; Customer's obligations are limited to the entity executing this Agreement."</p>
+              <button class="copy-btn" type="button">Copy counter-offer</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sev-blocker" tabindex="0" role="button" aria-expanded="false">
+        <div class="sev"><span class="sev-label">BLOCKER</span></div>
+        <div class="clause-col">
+          <p class="clause">Uncapped indemnification</p>
+          <p class="why"><span class="dot"></span>Do not sign as-is: no ceiling on what you could owe</p>
+        </div>
+        <p class="quote-preview">"Customer shall indemnify, defend, and hold harmless…"</p>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="detail">
+          <div class="detail-clip">
+          <div class="detail-inner">
+            <div>
+              <h4>Exact source sentence</h4>
+              <blockquote>"Customer shall indemnify, defend, and hold harmless Provider from and against any and all claims, damages, liabilities, costs, and expenses of any kind, without limitation, arising from Customer's use of the Services."</blockquote>
+            </div>
+            <div>
+              <h4>Counter-offer</h4>
+              <p class="counter">"Customer's indemnification obligations shall not exceed the total fees paid in the twelve (12) months preceding the claim, and shall exclude claims arising from Provider's gross negligence or willful misconduct."</p>
+              <button class="copy-btn" type="button">Copy counter-offer</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sev-push" tabindex="0" role="button" aria-expanded="false">
+        <div class="sev"><span class="sev-label">PUSH</span></div>
+        <div class="clause-col">
+          <p class="clause">Auto-renewal, notice by certified mail only</p>
+          <p class="why"><span class="dot"></span>Ask for a change: easy to miss, and hard to act on in time</p>
+        </div>
+        <p class="quote-preview">"…unless Customer provides written notice of non-renewal no less than…"</p>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="detail">
+          <div class="detail-clip">
+          <div class="detail-inner">
+            <div>
+              <h4>Exact source sentence</h4>
+              <blockquote>"This Agreement shall automatically renew for successive one-year terms unless Customer provides written notice of non-renewal no less than one hundred twenty (120) days prior to expiration, delivered by certified mail to Provider's registered agent."</blockquote>
+            </div>
+            <div>
+              <h4>Counter-offer</h4>
+              <p class="counter">"Renewal notice may be given by email to Provider's designated contact no less than thirty (30) days before the then-current term ends."</p>
+              <button class="copy-btn" type="button">Copy counter-offer</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sev-push" tabindex="0" role="button" aria-expanded="false">
+        <div class="sev"><span class="sev-label">PUSH</span></div>
+        <div class="clause-col">
+          <p class="clause">One-sided limitation of liability</p>
+          <p class="why"><span class="dot"></span>Ask for a change: leverage decides whether this is still signable if they refuse</p>
+        </div>
+        <p class="quote-preview">"In no event shall Provider's aggregate liability exceed…"</p>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="detail">
+          <div class="detail-clip">
+          <div class="detail-inner">
+            <div>
+              <h4>Exact source sentence</h4>
+              <blockquote>"In no event shall Provider's aggregate liability exceed the fees paid by Customer in the one (1) month preceding the event giving rise to the claim, and Provider shall have no liability for indirect, incidental, or consequential damages."</blockquote>
+            </div>
+            <div>
+              <h4>Counter-offer</h4>
+              <p class="counter">"Provider's aggregate liability shall not be less than twelve (12) months of fees paid, and the exclusion of indirect damages shall not apply to breaches of confidentiality or data-protection obligations."</p>
+              <button class="copy-btn" type="button">Copy counter-offer</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sev-note" tabindex="0" role="button" aria-expanded="false">
+        <div class="sev"><span class="sev-label">NOTE</span></div>
+        <div class="clause-col">
+          <p class="clause">Governing law: Delaware</p>
+          <p class="why"><span class="dot"></span>Worth knowing: sets the rules for everything else above</p>
+        </div>
+        <p class="quote-preview">"This Agreement shall be governed by the laws of the State of Delaware…"</p>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="detail">
+          <div class="detail-clip">
+          <div class="detail-inner">
+            <div>
+              <h4>Exact source sentence</h4>
+              <blockquote>"This Agreement shall be governed by the laws of the State of Delaware, without regard to conflict of law principles."</blockquote>
+            </div>
+            <div>
+              <h4>What to do</h4>
+              <p class="counter">Informational: this determines how every other clause is interpreted and enforced. No action needed on its own.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="also-seen">
+      <strong>Also seen</strong> (outside the core clause set, lower confidence): an assignment clause lets Provider transfer this Agreement to another company without your consent.
+    </div>
+
+    </div>
+
+    <div id="clean-view" role="tabpanel" aria-labelledby="tab-clean" hidden>
+
+      <div class="clean-verdict">
+        <p class="clean-headline">You're probably fine.</p>
+        <p class="clean-sub">Nothing in this contract reaches Blocker or Push. Redline read the whole thing and isn't manufacturing a problem to justify the review.</p>
+      </div>
+
+      <div class="board-head">
+        <span>Severity</span>
+        <span>Flag</span>
+        <span>Source</span>
+        <span></span>
+      </div>
+
+      <div class="board">
+        <div class="row sev-note" tabindex="0" role="button" aria-expanded="false">
+          <div class="sev"><span class="sev-label">NOTE</span></div>
+          <div class="clause-col">
+            <p class="clause">Governing law: California</p>
+            <p class="why"><span class="dot"></span>Worth knowing: sets the rules for everything else above</p>
+          </div>
+          <p class="quote-preview">"This Agreement shall be governed by the laws of the State of California…"</p>
+          <span class="chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M6 3.5L11 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div class="detail">
+            <div class="detail-clip">
+            <div class="detail-inner">
+              <div>
+                <h4>Exact source sentence</h4>
+                <blockquote>"This Agreement shall be governed by the laws of the State of California, without regard to conflict of law principles."</blockquote>
+              </div>
+              <div>
+                <h4>What to do</h4>
+                <p class="counter">Informational: this determines how every other clause is interpreted and enforced. No action needed on its own.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="qa">
+      <h3>Ask about this contract</h3>
+      <div class="transcript" id="transcript">
+        <div class="qa-turn">
+          <p class="qa-q">How much notice do I need to give to cancel?</p>
+          <p class="qa-a">You must provide written notice of non-renewal no less than 120 days before the current term ends, delivered by certified mail to Provider's registered agent.</p>
+        </div>
+        <div class="qa-turn">
+          <p class="qa-q">Can I cancel early if I'm unhappy with the service?</p>
+          <p class="qa-a unaddressed">The document doesn't address early termination for dissatisfaction; only the renewal and non-renewal terms above.</p>
+        </div>
+      </div>
+      <form class="qa-input" id="qa-form">
+        <input type="text" id="qa-field" placeholder="Ask a question about this contract…" autocomplete="off" />
+        <button class="qa-send" type="submit">Ask</button>
+      </form>
+    </div>
+
+  </div>
+
+<script>
+(function(){
+  // Signature interaction: the board "checks in" and settles into severity
+  // order, like a departure board resorting by urgency. Rows are already
+  // rendered in DOM (severity) order; we measure current positions, then
+  // animate from a randomized start position back to rest via FLIP.
+  var board = document.getElementById('board');
+  var rows = Array.prototype.slice.call(board.querySelectorAll('.row'));
+
+  var first = rows.map(function(r){ return r.getBoundingClientRect().top; });
+  var order = rows.map(function(_, i){ return i; });
+  // shuffle a scramble order distinct from final order
+  for (var i = order.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = order[i]; order[i] = order[j]; order[j] = t;
+  }
+
+  rows.forEach(function(row, i){
+    var targetTop = first[i];
+    var fromTop = first[order[i]];
+    var delta = fromTop - targetTop;
+    row.style.transition = 'none';
+    row.style.transform = 'translateY(' + delta + 'px)';
+  });
+
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      rows.forEach(function(row, i){
+        row.style.transition = 'transform .9s cubic-bezier(0.16,1,0.3,1)';
+        row.style.transitionDelay = (i * 55) + 'ms';
+        row.style.transform = 'translateY(0)';
+      });
+
+      // once settled, hold-flash the red-line-triggered row
+      var holdRow = board.querySelector('[data-hold="true"]');
+      if (holdRow) {
+        setTimeout(function(){
+          holdRow.classList.add('held');
+          setTimeout(function(){ holdRow.classList.remove('held'); }, 1800);
+        }, 900 + rows.length * 55 + 200);
+      }
+    });
+  });
+
+  // expand / collapse detail on row click or Enter/Space — applies to every
+  // row on the page (both the flagged board and the clean-verdict board)
+  var allRows = document.querySelectorAll('.row');
+  allRows.forEach(function(row){
+    function toggle(){
+      var open = row.getAttribute('aria-expanded') === 'true';
+      row.setAttribute('aria-expanded', String(!open));
+    }
+    row.addEventListener('click', function(e){
+      if (e.target.closest('.copy-btn')) return;
+      toggle();
+    });
+    row.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  // copy counter-offer
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var text = btn.previousElementSibling.textContent;
+      if (navigator.clipboard) { navigator.clipboard.writeText(text).catch(function(){}); }
+      btn.classList.add('copied');
+      var original = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(function(){ btn.classList.remove('copied'); btn.textContent = original; }, 1600);
+    });
+  });
+
+  // flagged / clean state toggle
+  var flaggedView = document.getElementById('flagged-view');
+  var cleanView = document.getElementById('clean-view');
+  document.querySelectorAll('.state-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var showClean = btn.dataset.state === 'clean';
+      flaggedView.hidden = showClean;
+      cleanView.hidden = !showClean;
+      document.querySelectorAll('.state-btn').forEach(function(b){
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', String(b === btn));
+      });
+    });
+  });
+
+  // Q&A: a static comp has no model behind it, so a typed question always
+  // returns the same honest "not addressed" shape the product uses when the
+  // document genuinely doesn't cover something — never a fabricated answer.
+  var qaForm = document.getElementById('qa-form');
+  var qaField = document.getElementById('qa-field');
+  var transcript = document.getElementById('transcript');
+  qaForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var question = qaField.value.trim();
+    if (!question) return;
+
+    var turn = document.createElement('div');
+    turn.className = 'qa-turn';
+    var q = document.createElement('p');
+    q.className = 'qa-q';
+    q.textContent = question;
+    turn.appendChild(q);
+
+    var pending = document.createElement('p');
+    pending.className = 'qa-pending';
+    pending.textContent = 'Reading the contract…';
+    turn.appendChild(pending);
+
+    transcript.appendChild(turn);
+    qaField.value = '';
+    qaField.disabled = true;
+    transcript.scrollTop = transcript.scrollHeight;
+
+    setTimeout(function(){
+      var answer = document.createElement('p');
+      answer.className = 'qa-a unaddressed';
+      answer.textContent = "This is a design comp, not a live model — in the real product this answer would be grounded in the pasted contract text, or say plainly that the document doesn't address it.";
+      turn.replaceChild(answer, pending);
+      qaField.disabled = false;
+      qaField.focus();
+    }, 700);
+  });
+})();
+</script>
+</body>
+</html>

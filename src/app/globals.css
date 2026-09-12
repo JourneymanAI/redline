@@ -1,0 +1,59 @@
+:root {
+  --terminal-night: #0f1115;
+  --terminal-night-raised: #171a1f;
+  --split-flap-cream: #f5f2ea;
+  --split-flap-cream-dimmed: #f5f2ea99;
+  --worn-card-stock: #b0aa98;
+  --housing-seam: #2b2f36;
+  --gate-change-red: #d94f30;
+  --alert-ink: #2a0d06;
+  --delayed-amber: #c8862b;
+  --focus-gold: #e8c14d;
+
+  --radius: 2px;
+  --font-board: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  color-scheme: dark;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100%;
+  background: var(--terminal-night);
+  color: var(--split-flap-cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--gate-change-red);
+  color: var(--split-flap-cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-gold);
+  outline-offset: 2px;
+}

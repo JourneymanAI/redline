@@ -1,0 +1,299 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 44px 28px 88px;
+}
+
+.wordmark {
+  font-family: var(--font-board);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  margin-bottom: 44px;
+}
+
+.hero {
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+
+.headline {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+.subhead {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--split-flap-cream-dimmed);
+}
+
+.contrast {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.panel {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelLabel {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--worn-card-stock);
+  margin-bottom: 12px;
+}
+
+/* Before: deliberately plain. No border, no elevated background, no board
+   chrome, so the contrast with the flag panel does the arguing. */
+.before {
+  flex: 1;
+  padding: 20px 4px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--split-flap-cream-dimmed);
+}
+
+/* After: one live Gate Board row, same component family as the result
+   screen (bordered rectangle, Terminal Night Raised, housing-seam rule). */
+.after {
+  flex: 1;
+  background: var(--terminal-night-raised);
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+  padding: 4px 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 84px 1fr 32px;
+  align-items: start;
+  gap: 12px;
+  padding: 16px 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  transition: background-color 0.15s ease;
+}
+
+.row:hover {
+  background: #ffffff10;
+}
+
+.sevLabel {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gate-change-red);
+  padding-top: 2px;
+}
+
+.clauseCol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.clause {
+  font-family: var(--font-board);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.why {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--split-flap-cream-dimmed);
+}
+
+.chev {
+  color: var(--worn-card-stock);
+  transition: transform 0.2s ease;
+  padding-top: 4px;
+}
+
+.chevOpen {
+  transform: rotate(90deg);
+}
+
+.detailClip {
+  overflow: hidden;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detailClipOpen {
+  grid-template-rows: 1fr;
+}
+
+.detailInner {
+  overflow: hidden;
+}
+
+.detailContent {
+  padding: 4px 16px 20px 84px;
+  border-top: 1px solid var(--housing-seam);
+  margin-top: 4px;
+  padding-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.detailHeading {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--worn-card-stock);
+  margin-bottom: 6px;
+}
+
+.quote {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--split-flap-cream);
+}
+
+.counter {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.copyBtn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+  color: var(--split-flap-cream);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.copyBtn:hover {
+  border-color: var(--worn-card-stock);
+  background: #ffffff10;
+}
+
+.copyBtnCopied {
+  border-color: var(--delayed-amber);
+  color: var(--delayed-amber);
+}
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  margin: 44px 0;
+}
+
+.cta {
+  font-family: var(--font-body);
+  font-size: 15px;
+  background: transparent;
+  border: 1px solid var(--worn-card-stock);
+  border-radius: var(--radius);
+  color: var(--split-flap-cream);
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+.cta:hover {
+  border-color: var(--split-flap-cream);
+}
+
+.teaser {
+  border-top: 1px solid var(--housing-seam);
+  padding-top: 28px;
+}
+
+.teaserLabel {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--worn-card-stock);
+  margin-bottom: 16px;
+}
+
+.teaserBoard {
+  background: var(--terminal-night-raised);
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+}
+
+.teaserRow {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--housing-seam);
+}
+
+.teaserRow:last-child {
+  border-bottom: none;
+}
+
+.teaserSev {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding-top: 2px;
+}
+
+.teaserSevPush {
+  color: var(--delayed-amber);
+}
+
+.teaserSevNote {
+  color: var(--worn-card-stock);
+}
+
+.teaserClause {
+  font-family: var(--font-board);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.footnote {
+  margin-top: 44px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--worn-card-stock);
+}
+
+@media (max-width: 760px) {
+  .contrast {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    grid-template-columns: 64px 1fr 24px;
+  }
+
+  .detailContent {
+    padding-left: 16px;
+  }
+}

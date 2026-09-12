@@ -73,6 +73,13 @@ client_secret*.json
 .turbo
 .cache
 
+# Impeccable design-plugin process artifacts — regeneratable, not project record.
+# DESIGN.md, its .impeccable/design.json sidecar, and .impeccable/surfaces/ ARE
+# tracked on purpose: they're the durable design-system record, not ephemera.
+.impeccable/hook.cache.json
+.impeccable/questions/
+.impeccable/review/
+
 # Logs & debug
 logs
 *.log
@@ -94,6 +101,12 @@ Thumbs.db
 Claude_MD_Prompt.txt
 Redline_First_Decision.txt
 Redline-Grill_the_interview.txt
+
+# Cohort session notes — contains other students' names and personal Vercel URLs
+Redline_Build_Notes.txt
+
+# Account recovery codes — never commit, keep in a password manager instead
+Vercel-recovery-codes.txt
 
 # Course / session materials — kept local (the distilled notes in docs/ are tracked)
 Session 2 08282026 Harness and Brief.docx

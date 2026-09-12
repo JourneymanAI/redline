@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T00:00:00.000Z",
+  "title": "Design System: Redline",
+  "extensions": {
+    "colorMeta": {
+      "terminal-night": {
+        "role": "primary",
+        "displayName": "Terminal Night",
+        "canonical": "#0f1115",
+        "tonalRamp": ["#0a0b0e", "#0f1115", "#171a1f", "#22262d", "#3a3f47", "#5c6169", "#8b9099", "#c4c8cf"]
+      },
+      "terminal-night-raised": {
+        "role": "neutral",
+        "displayName": "Terminal Night, Raised",
+        "canonical": "#171a1f",
+        "tonalRamp": ["#0a0b0e", "#0f1115", "#171a1f", "#22262d", "#3a3f47", "#5c6169", "#8b9099", "#c4c8cf"]
+      },
+      "split-flap-cream": {
+        "role": "primary",
+        "displayName": "Split-Flap Cream",
+        "canonical": "#f5f2ea",
+        "tonalRamp": ["#3a3831", "#615e53", "#8a8677", "#b0aa98", "#cec9ba", "#e2ded2", "#f5f2ea", "#fbfaf6"]
+      },
+      "split-flap-cream-dimmed": {
+        "role": "neutral",
+        "displayName": "Split-Flap Cream, Dimmed",
+        "canonical": "#f5f2ea99",
+        "tonalRamp": ["#3a383166", "#615e5399", "#8a8677a6", "#b0aa98b3", "#cec9bacc", "#e2ded2d9", "#f5f2ea99", "#fbfaf6cc"]
+      },
+      "worn-card-stock": {
+        "role": "neutral",
+        "displayName": "Worn Card Stock",
+        "canonical": "#b0aa98",
+        "tonalRamp": ["#242219", "#3f3c2e", "#5c584690", "#7c775f", "#968f76", "#b0aa98", "#c9c4b3", "#e3e0d4"]
+      },
+      "housing-seam": {
+        "role": "neutral",
+        "displayName": "Housing Seam",
+        "canonical": "#2b2f36",
+        "tonalRamp": ["#0f1114", "#181b1f", "#2b2f36", "#3d434c", "#535a64", "#6f7680", "#93999f", "#c1c4c8"]
+      },
+      "gate-change-red": {
+        "role": "secondary",
+        "displayName": "Gate Change Red",
+        "canonical": "#d94f30",
+        "tonalRamp": ["#3d1409", "#601f0e", "#8c2d15", "#b53c1e", "#d94f30", "#e37a5f", "#eda591", "#f6d0c5"]
+      },
+      "alert-ink": {
+        "role": "neutral",
+        "displayName": "Alert Ink",
+        "canonical": "#2a0d06",
+        "tonalRamp": ["#150603", "#2a0d06", "#431a10", "#5f2c1e", "#7f4433", "#a2634e", "#c58e78", "#e3bfae"]
+      },
+      "delayed-amber": {
+        "role": "secondary",
+        "displayName": "Delayed Amber",
+        "canonical": "#c8862b",
+        "tonalRamp": ["#3a2609", "#5e3d10", "#87591a", "#a86f22", "#c8862b", "#d9a559", "#e7c48c", "#f3e1c1"]
+      },
+      "focus-gold": {
+        "role": "tertiary",
+        "displayName": "Focus Gold",
+        "canonical": "#e8c14d",
+        "tonalRamp": ["#453711", "#6e5a1c", "#977c28", "#bd9c34", "#e8c14d", "#eecf72", "#f3dd9c", "#f9ecc8"]
+      },
+      "hover-wash": {
+        "role": "neutral",
+        "displayName": "Hover Wash",
+        "canonical": "#ffffff10",
+        "tonalRamp": ["#ffffff05", "#ffffff08", "#ffffff10", "#ffffff18", "#ffffff22", "#ffffff30", "#ffffff40", "#ffffff55"]
+      }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "Clean-verdict headline only ('You're probably fine.')." },
+      "title": { "displayName": "Title", "purpose": "Boarding-pass route field; the largest mono type on the page." },
+      "data": { "displayName": "Board Data", "purpose": "Board row clause names." },
+      "body": { "displayName": "Body", "purpose": "Prose the signer reads for meaning: why-text, quotes, counter-offers, Q&A, disclaimer." },
+      "caption": { "displayName": "Caption", "purpose": "Secondary/dimmed supporting prose: a flag row's 'why' explanation text and the page footnote/disclosure line. Promoted from an undocumented 13px value shared by the Result screen's .why/.quote-preview classes and the landing page's .why/.footnote classes." },
+      "label": { "displayName": "Label", "purpose": "Uppercase mono micro-labels: board-head columns, field labels, detail-panel headers." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "board-settle", "value": "transform .9s cubic-bezier(0.16,1,0.3,1), per-row delay i*55ms", "purpose": "The Gate Board's one authored motion moment: rows FLIP from a randomized scramble position into severity order on load. Never generalize into a repeating/looping effect." },
+      { "name": "row-hold-flash", "value": "background-color 2.4s cubic-bezier(0.16,1,0.3,1); .held class applied ~900ms + rows.length*55ms after settle, held 1.8s", "purpose": "Gate Change Red flash on a newly-triggered or red-line-crossed row." },
+      { "name": "detail-expand", "value": "grid-template-rows .4s cubic-bezier(0.16,1,0.3,1), 0fr to 1fr", "purpose": "Row detail expand/collapse; deliberately avoids animating max-height." },
+      { "name": "chevron-rotate", "value": "transform .3s cubic-bezier(0.16,1,0.3,1), rotate 90deg on aria-expanded", "purpose": "Chevron indicator for row expand state." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "860px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Gate Board Row",
+      "kind": "custom",
+      "refersTo": "board-row",
+      "description": "Severity-ranked, reordering flag row with expand-in-place detail panel and hold-flash state. The system's signature component.",
+      "html": "<div class=\"ds-row ds-sev-blocker\" tabindex=\"0\" role=\"button\" aria-expanded=\"false\"><div class=\"ds-sev\"><span class=\"ds-sev-label\">BLOCKER</span></div><div class=\"ds-clause-col\"><p class=\"ds-clause\">Personal guarantee</p><p class=\"ds-why\"><span class=\"ds-dot\"></span>Crosses your red line: no personal guarantee, flagged regardless of how standard it is</p></div><p class=\"ds-quote-preview\">\"…the undersigned individual personally guarantees full payment…\"</p><span class=\"ds-chev\" aria-hidden=\"true\"><svg viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M6 3.5L11 8L6 12.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><div class=\"ds-detail\"><div class=\"ds-detail-clip\"><div class=\"ds-detail-inner\"><div><h4>Exact source sentence</h4><blockquote class=\"ds-quote\">\"By executing this Agreement, the undersigned individual personally guarantees full payment of all fees owed by Customer hereunder.\"</blockquote></div><div><h4>Counter-offer</h4><p class=\"ds-counter\">\"Strike this Section in its entirety; Customer's obligations are limited to the entity executing this Agreement.\"</p><button class=\"ds-copy-btn\" type=\"button\">Copy counter-offer</button></div></div></div></div></div>",
+      "css": ".ds-row{position:relative;display:grid;grid-template-columns:84px 1fr 300px 40px;align-items:center;padding:16px 4px;border-bottom:1px solid #2b2f36;background:transparent;cursor:pointer;min-width:0;transition:background-color 2.4s cubic-bezier(0.16,1,0.3,1),transform .6s cubic-bezier(0.16,1,0.3,1);color:#f5f2ea;font-family:-apple-system,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;} .ds-row:hover{background:#ffffff08;} .ds-row:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;} .ds-row.ds-held{background:#d94f30;} .ds-row.ds-held .ds-clause,.ds-row.ds-held .ds-sev-label{color:#2a0d06;} .ds-sev{display:flex;align-items:center;height:100%;} .ds-sev-label{font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;font-size:12px;font-weight:700;letter-spacing:.04em;} .ds-sev-blocker .ds-sev-label{color:#d94f30;} .ds-clause-col{min-width:0;padding-right:24px;} .ds-clause{font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;font-size:15px;font-weight:500;margin:0;letter-spacing:0.01em;} .ds-why{margin:5px 0 0;font-size:13px;color:#b0aa98;line-height:1.5;display:flex;align-items:flex-start;gap:6px;} .ds-dot{width:5px;height:5px;margin-top:7px;border-radius:50%;background:currentColor;flex:none;} .ds-quote-preview{color:#b0aa98;font-size:13px;line-height:1.5;padding-right:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .ds-chev{justify-self:end;display:flex;color:#b0aa98;transition:transform .3s cubic-bezier(0.16,1,0.3,1);} .ds-chev svg{width:14px;height:14px;} .ds-row[aria-expanded=\"true\"] .ds-chev{transform:rotate(90deg);} .ds-detail{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(0.16,1,0.3,1);} .ds-row[aria-expanded=\"true\"] .ds-detail{grid-template-rows:1fr;} .ds-detail-clip{min-height:0;overflow:hidden;} .ds-detail-inner{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 4px 8px 84px;} .ds-detail-inner h4{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b0aa98;margin:0 0 10px;font-weight:600;font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;} .ds-quote{margin:0;padding:14px 16px;background:#171a1f;border-radius:2px;font-size:14px;line-height:1.6;color:#f5f2ea;font-style:normal;} .ds-counter{font-size:14px;line-height:1.6;color:#f5f2ea99;margin:0 0 12px;} .ds-copy-btn{appearance:none;border:1px solid #2b2f36;background:transparent;color:#f5f2ea;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease;} .ds-copy-btn:hover{background:#ffffff10;border-color:#b0aa98;} .ds-copy-btn:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;}"
+    },
+    {
+      "name": "Boarding-Pass Ticket",
+      "kind": "card",
+      "refersTo": "ticket",
+      "description": "Segmented boarding-pass summary header carrying the contract's parties, route, term, and obligation, with an authored inline-SVG barcode.",
+      "html": "<section class=\"ds-ticket\" aria-label=\"Contract summary\"><div><p class=\"ds-field-label\">Reviewing for</p><p class=\"ds-field-value\">Acme Bookkeeping LLC</p></div><div><p class=\"ds-field-label\">Route</p><p class=\"ds-field-value ds-route\">CA <span class=\"ds-arrow\">&rarr;</span> DE</p></div><div class=\"ds-scan\" aria-hidden=\"true\"><svg viewBox=\"0 0 96 40\" preserveAspectRatio=\"none\"><rect x=\"0\" y=\"0\" width=\"2\" height=\"40\" fill=\"#f5f2ea\"/><rect x=\"7\" y=\"0\" width=\"3\" height=\"40\" fill=\"#f5f2ea\"/><rect x=\"22\" y=\"0\" width=\"4\" height=\"40\" fill=\"#f5f2ea\"/></svg><span class=\"ds-code\">RDL-88214-CA</span></div></section>",
+      "css": ".ds-ticket{margin-top:16px;border:1px solid #2b2f36;border-radius:2px;background:#171a1f;display:grid;grid-template-columns:1.4fr 1fr auto;align-items:stretch;} .ds-ticket>div{padding:20px 22px;border-right:1px solid #2b2f36;min-width:0;} .ds-ticket>div:last-child{border-right:none;} .ds-field-label{font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b0aa98;margin:0 0 8px;} .ds-field-value{margin:0;font-size:17px;line-height:1.3;color:#f5f2ea;font-family:-apple-system,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;} .ds-route{font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;font-size:22px;font-variant-numeric:tabular-nums;} .ds-arrow{color:#b0aa98;padding:0 8px;font-weight:400;} .ds-scan{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 20px;min-width:130px;} .ds-scan svg{display:block;height:40px;width:auto;} .ds-code{font-family:\"JetBrains Mono\",ui-monospace,\"SF Mono\",Menlo,Consolas,monospace;font-size:10px;letter-spacing:.12em;color:#b0aa98;}"
+    },
+    {
+      "name": "Tab Toggle",
+      "kind": "nav",
+      "refersTo": "tab-toggle",
+      "description": "Flagged / Clean verdict two-state toggle: flat text tabs on a shared rule, no pill background.",
+      "html": "<div class=\"ds-state-toggle\" role=\"tablist\"><button type=\"button\" class=\"ds-state-btn ds-is-active\" role=\"tab\" aria-selected=\"true\">Flags found</button><button type=\"button\" class=\"ds-state-btn\" role=\"tab\" aria-selected=\"false\">Clean verdict</button></div>",
+      "css": ".ds-state-toggle{display:flex;gap:4px;border-bottom:1px solid #2b2f36;} .ds-state-btn{appearance:none;background:transparent;border:none;color:#b0aa98;font-family:-apple-system,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;padding:10px 4px;margin-right:22px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s ease,border-color .15s ease;} .ds-state-btn:hover{color:#f5f2ea99;} .ds-state-btn:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;} .ds-state-btn.ds-is-active{color:#f5f2ea;border-bottom-color:#f5f2ea;}"
+    },
+    {
+      "name": "Q&A Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Document-grounded question box: bordered rectangle input with a ghost-outline send button.",
+      "html": "<form class=\"ds-qa-input\"><input type=\"text\" class=\"ds-qa-field\" placeholder=\"Ask a question about this contract…\" autocomplete=\"off\" /><button class=\"ds-qa-send\" type=\"submit\">Ask</button></form>",
+      "css": ".ds-qa-input{display:flex;gap:10px;} .ds-qa-field{flex:1;background:#171a1f;border:1px solid #2b2f36;color:#f5f2ea;padding:12px 14px;border-radius:2px;font-size:14px;font-family:-apple-system,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;} .ds-qa-field::placeholder{color:#b0aa98;} .ds-qa-field:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;} .ds-qa-field:disabled{opacity:.6;} .ds-qa-send{appearance:none;border:1px solid #b0aa98;background:transparent;color:#f5f2ea;padding:0 18px;border-radius:2px;cursor:pointer;font-size:14px;transition:border-color .15s ease,color .15s ease;} .ds-qa-send:hover{border-color:#f5f2ea;} .ds-qa-send:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;} .ds-qa-send:disabled{cursor:not-allowed;opacity:.4;border-color:#2b2f36;}"
+    },
+    {
+      "name": "Copy Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Bordered ghost button used for 'Copy counter-offer'; switches to Delayed Amber on successful copy.",
+      "html": "<button class=\"ds-copy-btn\" type=\"button\">Copy counter-offer</button>",
+      "css": ".ds-copy-btn{appearance:none;border:1px solid #2b2f36;background:transparent;color:#f5f2ea;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease;} .ds-copy-btn:hover{background:#ffffff10;border-color:#b0aa98;} .ds-copy-btn:active{background:#ffffff18;} .ds-copy-btn.ds-copied{border-color:#c8862b;color:#c8862b;} .ds-copy-btn:focus-visible{outline:2px solid #e8c14d;outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Gate Board",
+    "overview": "Redline's result screen is a boarding pass paired with a live airport departure board. It does not read as a SaaS dashboard reviewing a document — it reads as an operations surface tracking risk the way a terminal tracks flights: ranked, positional, and willing to interrupt its own calm only when something actually changes state. The system explicitly refuses the \"friendly legal-AI SaaS dashboard\" canon it was built against: no soft neutral ground, no brand-blue accent, no chat-bubble Q&A, no rounded card grid. Instead: a near-black ground, warm cream ink, mechanical monospace for anything that is data, and a single reserved alert color that only exists as a flash, never as a resting badge.\n\nDensity is high but legible — a fixed-column board with tight row rhythm, tabular figures, and uppercase micro-labels doing the organizing work that color-coded pills or icon badges would do in the declined world. The one authored motion moment (rows scrambling into severity order on load, then settling) is the system's single indulgence; everything else is instant or near-instant state change.",
+    "keyCharacteristics": [
+      "Near-black terminal ground with warm cream ink — never a light theme, never a blue accent",
+      "Two-voice type system: mechanical monospace for data/board content, plain system-UI sans for prose",
+      "Flat by default — zero shadows; depth comes from background-color steps and 1px rule dividers",
+      "One reserved alert color that fires only on state change, never as a static severity badge",
+      "Near-square corners (2px) everywhere; bordered rectangles instead of soft app chrome"
+    ],
+    "rules": [
+      { "name": "The One Flash Rule", "body": "Gate Change Red never appears as a resting UI color — not a badge, not a persistent label, not a border. It exists only as the .held state fired on a row that just crossed a red line or resolved to Blocker, and it clears itself (the comp holds for 1.8s). Any new component that wants \"danger\" as a permanent color is wrong for this system; permanent Blocker identity is carried by the Blocker label's own color and position, not by red.", "section": "colors" },
+      { "name": "The One Color Per Severity Rule", "body": "Each severity level (Blocker, Push, Note) owns exactly one label color and weight, applied only to the severity label text — never blended into row backgrounds, borders, or icons at rest.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "Mono is for data the signer scans (labels, severities, clause names, the route, the barcode code); sans is for prose the signer reads (why-text, quotes, answers, disclaimers). Never put a full sentence of prose in mono, and never label a data column in sans.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces never lift with a shadow, at rest or on interaction. Depth is background-step + rule-divider only. A component that reaches for box-shadow is not native to this world.", "section": "elevation" },
+      { "name": "The Bordered Rectangle Rule", "body": "Interactive containers (buttons, the Q&A input, tags) are bordered rectangles at 2px radius, not soft app chrome. If a new component wants a shadow or a larger radius to signal \"clickable,\" use a 1px border and the 2px radius instead.", "section": "shapes" },
+      { "name": "The Authored-Mark Rule", "body": "Anything that reads as an icon or a texture (the barcode, the chevron) is hand-authored inline SVG. No icon-font glyphs, no Unicode arrows/dots standing in for icons, and no CSS repeating-gradient standing in for authored texture — both were explicitly replaced during the fix round.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do use JetBrains Mono for anything that is board/data content (severities, clause names, column labels, the route, the barcode code) and the system sans stack for anything that is prose the signer reads for meaning.",
+      "Do use the grid-template-rows: 0fr → 1fr technique for any new expand/collapse panel, not max-height.",
+      "Do keep Gate Change Red exclusive to the state-change flash; a severity label's resting color and a state-change flash are two different jobs and use different tokens.",
+      "Do author icons and texture as inline SVG."
+    ],
+    "donts": [
+      "Don't add a box-shadow anywhere in this system — depth is background-step and rule-divider only.",
+      "Don't use a pill-shaped button, a soft-shadow card, or a radius larger than 2px — near-square corners and bordered rectangles are the whole form language.",
+      "Don't reuse Gate Change Red as a static severity badge, border, or icon color; it is a flash, not a palette color available for general \"danger\" use.",
+      "Don't use a Unicode glyph or a CSS repeating-gradient as a stand-in icon or texture — both were explicitly replaced with authored inline SVG during the fix round; treat any reappearance as a regression, not a shortcut.",
+      "Don't generalize the board's settle-on-load FLIP animation into a repeating or looping effect, and don't soften or remove it — it is the system's one authored motion moment, confirmed as sufficient at ship.",
+      "Don't ship the chat-bubble Q&A pattern or a rounded neutral-background card grid — both were explicitly declined directions for this world, not unexplored options.",
+      "Don't treat the CDN-loaded JetBrains Mono or the missing split-flap character-flip / perforation ornament as bugs to silently fix in a future pass without flagging them — they are recorded open follow-ups from the finish review (font should be self-hosted if this world carries into the real Next.js app; the flip/perforation texture was judged unnecessary at ship but was never built)."
+    ]
+  }
+}
