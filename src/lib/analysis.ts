@@ -54,10 +54,22 @@ export async function analyzeContract(
     return isSubstring;
   });
 
-  // Determine verdict: if no Blocker or Push flags exist, verdict is "clean" (ADR 0003, 0004)
-  // - "flags" verdict: one or more Blocker or Push flags exist → signer should take action
-  // - "clean" verdict: only Note flags (or no flags) exist → contract is acceptable as-is
-  // Per ADR 0004: "Never manufactures flags to justify the review"
+  // ========== VERDICT DETERMINATION (Criterion 3 from PRD § "What good looks like") ==========
+  // Clean-set false-Blocker rate: on a labelled set of genuinely standard contracts,
+  // share of those that get a false Blocker or Push flag. Target ~0; the clean verdict fires instead.
+  //
+  // Verdict logic (ADR 0003, 0004):
+  //   "flags" verdict: one or more Blocker or Push flags exist → signer should take action
+  //   "clean" verdict: only Note flags (or no flags) exist → contract is acceptable as-is
+  //
+  // The verdict.notesCount field is ONLY included when kind = 'clean', counting the
+  // number of Note-severity flags that were found. This allows the UI to surface low-priority
+  // informational flags (e.g., unusual-but-negotiable clauses) without triggering alarm.
+  //
+  // Per ADR 0004: "Never manufactures flags to justify the review". A clean verdict on a
+  // standard contract never invents Note flags; it reflects the actual flag set returned.
+  //
+  // Test coverage: tests/clean-verdict.test.ts (verdict logic) + tests/clean-verdict-display.test.tsx (UI)
   const hasBlockerOrPush = verifiedFlags.some(
     (f) => f.severity === 'Blocker' || f.severity === 'Push'
   );
