@@ -40,7 +40,7 @@ export function ResultScreen({ analysis }: ResultScreenProps) {
           </h1>
           <p className="text-dimmed">
             No Blocker or Push issues found. {analysis.verdict.notesCount} note
-            {analysis.verdict.notesCount !== 1 ? 's' : ''} below for awareness.
+            {analysis.verdict.notesCount !== 1 ? 's' : ''} below.
           </p>
         </div>
       ) : (

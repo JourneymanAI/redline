@@ -1,8 +1,6 @@
 import {
   Analysis,
-  Flag,
   ModelBoundary,
-  ConfidenceMarker,
   Verdict,
 } from './model-boundary';
 

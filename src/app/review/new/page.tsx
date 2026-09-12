@@ -128,9 +128,9 @@ export default function NewReview() {
           )}
 
           <div className={styles.notice}>
-            <strong>What Redline sees:</strong> Only the text you paste. No
-            attachments, no embedded images, no linked documents. If your
-            contract references schedules or exhibits, paste those too.
+            <strong>What Redline sees:</strong> Only the text you paste — no
+            attachments, images, or linked documents. If your contract
+            references schedules or exhibits, include those too.
           </div>
 
           <div className={styles.actions}>
