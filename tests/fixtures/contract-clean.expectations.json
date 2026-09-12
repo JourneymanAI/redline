@@ -1,0 +1,15 @@
+{
+  "expectation": "clean",
+  "reasoning": "This is a standard mutual services agreement with balanced terms.",
+  "expectedFlags": [],
+  "expectedNotes": [
+    {
+      "clauseType": "governing-law",
+      "note": "Agreement is governed by Colorado law",
+      "sourceSentence": "This Agreement shall be governed by the laws of Colorado, without regard to its choice-of-law provisions."
+    }
+  ],
+  "partyNames": ["Reliable Software Partners, Inc.", "Midwest Manufacturing Corp."],
+  "term": "one (1) year",
+  "clientObligation": "pay for professional software development and consulting services"
+}

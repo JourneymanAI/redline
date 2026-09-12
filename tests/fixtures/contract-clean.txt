@@ -1,0 +1,58 @@
+SOFTWARE SERVICES AGREEMENT
+
+This Software Services Agreement ("Agreement") is entered into as of September 12, 2026, between Reliable Software Partners, Inc., a Colorado corporation ("Service Provider"), and Midwest Manufacturing Corp., a Michigan limited liability company ("Company").
+
+1. SERVICES
+
+Service Provider shall provide professional software development and consulting services as described in individual Statements of Work (SOWs) appended to this Agreement and mutually executed by both parties.
+
+2. TERM AND TERMINATION
+
+This Agreement shall commence on the date signed by both parties and shall continue for one (1) year from the date of inception, unless terminated earlier by either party for material breach if not cured within thirty (30) days of written notice. Either party may terminate for convenience by providing sixty (60) days' written notice. Upon termination, Service Provider shall deliver all completed work and materials, and Company shall pay all fees for work completed through the termination date.
+
+3. INTELLECTUAL PROPERTY
+
+Service Provider retains all pre-existing intellectual property and tools developed prior to engagement. Company shall own all custom work product, code, and documentation created specifically for Company under this Agreement. Service Provider retains the right to use general methodologies, knowledge, and know-how developed in performing the Services.
+
+4. LIABILITY AND INDEMNIFICATION
+
+Except in cases of gross negligence or willful misconduct, Service Provider's total liability shall not exceed the fees paid in the twelve (12) months preceding the claim. Each party shall indemnify the other against third-party claims arising from its own breach of this Agreement or violation of law. Neither party shall be liable for indirect, consequential, or punitive damages.
+
+5. PAYMENT
+
+Company shall pay invoices within thirty (30) days of receipt. Invoices are due and payable in full regardless of whether the services are disputed. Disputed portions must be raised in writing within fifteen (15) days of invoice. Late payment shall accrue interest at 1.5% per month or the maximum rate allowed by law.
+
+6. CONFIDENTIALITY
+
+Each party agrees to keep confidential any proprietary information disclosed by the other party, except as required by law or court order, or with the other party's prior written consent. The confidentiality obligation shall expire three (3) years after termination of this Agreement.
+
+7. GOVERNING LAW
+
+This Agreement shall be governed by the laws of Colorado, without regard to its choice-of-law provisions.
+
+8. LIMITATION OF LIABILITY
+
+Company's sole remedy for any breach shall be termination of the Agreement. Service Provider's total cumulative liability for all claims, regardless of cause, shall be limited to the fees paid by Company in the twelve (12) months immediately preceding the claim, provided that liability for gross negligence or breach of confidentiality shall not exceed such cap.
+
+9. INDEPENDENT CONTRACTOR
+
+Service Provider is an independent contractor. Nothing in this Agreement creates an employment relationship, partnership, or agency relationship between the parties.
+
+10. ENTIRE AGREEMENT
+
+This Agreement, including any Statements of Work, constitutes the entire agreement regarding the Services. Any modifications must be in writing and signed by both parties.
+
+11. SEVERABILITY
+
+If any provision is found invalid or unenforceable, the remaining provisions shall remain in effect.
+
+EXECUTED IN DUPLICATE
+
+By: _____________________________     By: _____________________________
+Reliable Software Partners, Inc.      Midwest Manufacturing Corp.
+
+Name: ___________________________     Name: ___________________________
+
+Title: ____________________________     Title: ____________________________
+
+Date: _____________________________     Date: _____________________________

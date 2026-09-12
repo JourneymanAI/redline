@@ -1,0 +1,37 @@
+{
+  "plantedClauses": [
+    {
+      "clauseType": "personal-guarantee",
+      "expectedSeverity": "Blocker",
+      "sourceSentence": "The signatory on behalf of Client, if an individual or if Client is a partnership or LLC, personally guarantees all of Client's obligations under this Agreement, including payment obligations, indemnification obligations, and compliance with all terms hereof.",
+      "reasoning": "Direct personal liability for all obligations, including unlimited indemnification and fees."
+    },
+    {
+      "clauseType": "uncapped-indemnification",
+      "expectedSeverity": "Blocker",
+      "sourceSentence": "This indemnification obligation is unlimited in scope, amount, and time, and applies to any claim regardless of whether Vendor had any knowledge of the potential claim or any opportunity to mitigate damages.",
+      "reasoning": "Explicitly unlimited indemnity with no cap or time limit; applies even to claims Vendor could have prevented."
+    },
+    {
+      "clauseType": "unilateral-termination-without-kill-fee",
+      "expectedSeverity": "Push",
+      "sourceSentence": "Vendor may terminate this Agreement at any time upon thirty (30) days' written notice to Client, with or without cause.",
+      "reasoning": "Vendor can exit unilaterally; Client has no protection for work-in-progress or commitment."
+    },
+    {
+      "clauseType": "ip-assignment",
+      "expectedSeverity": "Push",
+      "sourceSentence": "All work product, code, documentation, and any intellectual property created by Vendor in connection with the Services, whether before, during, or after this Agreement, shall be the sole and exclusive property of Vendor.",
+      "reasoning": "IP created by Vendor before or after this Agreement are assigned to Vendor; Client gets nothing."
+    },
+    {
+      "clauseType": "confidentiality-overreach",
+      "expectedSeverity": "Note",
+      "sourceSentence": "Vendor may use Client's name, logo, and description of Client's use of the Services for any purpose without prior written consent, and may disclose all information related to Client to any third party, including competitors, for any reason.",
+      "reasoning": "Vendor can share all Client information with anyone, including competitors, without consent."
+    }
+  ],
+  "partyNames": ["TechVendor Inc.", "SampleCorp LLC"],
+  "term": "one (1) year",
+  "clientObligation": "provide software development and consulting services"
+}
