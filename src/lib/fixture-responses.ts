@@ -1,4 +1,4 @@
-import type { Analysis } from './model-boundary';
+import type { Analysis, Answer } from './model-boundary';
 
 /**
  * Fixture Severity Assignments (ADR 0003 — "The flagging model")
@@ -29,6 +29,105 @@ import type { Analysis } from './model-boundary';
  *   - ip-assignment: Push (vendor owns all work including "before/after" agreement)
  *   - confidentiality-overreach: Note (vendor can share with competitors without permission)
  */
+
+/**
+ * Q&A Fixture Responses (ADR 0001 — "Citation Integrity")
+ *
+ * For criterion 6 (Eval): "Q&A groundedness — On questions the document does not
+ * answer, share where Redline says so rather than answering anyway. Target ~100%;
+ * no fabricated answers."
+ *
+ * Every answer must be:
+ * 1. Grounded in the document text (verbatim quote or very close paraphrase)
+ * 2. Marked addressed: true when the document answers it
+ * 3. Marked addressed: false when the document does NOT answer it
+ * 4. Never fabricated or hallucinated
+ */
+export const fixtureQAResponses: {
+  [fixtureKey: string]: { [question: string]: Answer };
+} = {
+  'contract-with-clauses': {
+    'What is the termination clause?':
+      {
+        answer:
+          'Vendor may terminate this Agreement at any time upon thirty (30) days\' written notice to Client, with or without cause.',
+        groundedIn: 'Section 2: TERM AND TERMINATION',
+        addressed: true,
+      },
+    'How long is the term?':
+      {
+        answer:
+          'This Agreement shall commence on the date hereof and continue for one (1) year, unless earlier terminated.',
+        groundedIn: 'Section 2: TERM AND TERMINATION',
+        addressed: true,
+      },
+    'Who owns the intellectual property created under this agreement?':
+      {
+        answer:
+          'All work product, code, documentation, and any intellectual property created by Vendor in connection with the Services, whether before, during, or after this Agreement, shall be the sole and exclusive property of Vendor.',
+        groundedIn: 'Section 3: INTELLECTUAL PROPERTY',
+        addressed: true,
+      },
+    'What is the payment term?':
+      {
+        answer: 'Client shall pay Vendor\'s invoices within thirty (30) days of receipt.',
+        groundedIn: 'Section 5: PAYMENT TERMS',
+        addressed: true,
+      },
+    'Does this contract include employee benefits?':
+      {
+        answer:
+          'This contract does not address employee benefits. It is a service agreement between a vendor and a client, not an employment agreement.',
+        addressed: false,
+      },
+    'What is the arbitration clause?':
+      {
+        answer:
+          'This contract does not include an arbitration clause. It specifies that disputes shall be governed by Delaware law but does not mandate arbitration.',
+        addressed: false,
+      },
+    'Is there a warranty clause?':
+      {
+        answer:
+          'The contract does not explicitly define vendor warranties. It focuses on indemnification obligations.',
+        addressed: false,
+      },
+  },
+  'contract-clean': {
+    'How long is the term?':
+      {
+        answer:
+          'This Agreement shall commence on the date signed by both parties and shall continue for one (1) year from the date of inception, unless terminated earlier.',
+        groundedIn: 'Section 2: TERM AND TERMINATION',
+        addressed: true,
+      },
+    'Who owns the intellectual property?':
+      {
+        answer:
+          'Company shall own all custom work product, code, and documentation created specifically for Company under this Agreement. Service Provider retains all pre-existing intellectual property and tools developed prior to engagement.',
+        groundedIn: 'Section 3: INTELLECTUAL PROPERTY',
+        addressed: true,
+      },
+    'What are the payment terms?':
+      {
+        answer: 'Company shall pay invoices within thirty (30) days of receipt.',
+        groundedIn: 'Section 5: PAYMENT',
+        addressed: true,
+      },
+    'Does this contract have a personal guarantee clause?':
+      {
+        answer:
+          'No, this contract does not include a personal guarantee. It is between corporate entities with limited liability protections.',
+        addressed: false,
+      },
+    'What are the employee benefits?':
+      {
+        answer:
+          'This contract does not address employee benefits. It is a service agreement, not an employment contract.',
+        addressed: false,
+      },
+  },
+};
 
 export const fixtureResponses = {
   'contract-with-clauses': (): Analysis => ({
@@ -145,4 +244,47 @@ export function getFixtureResponse(documentText: string): Analysis {
   throw new Error(
     `No fixture found. Use contract starting with "MASTER SERVICE AGREEMENT" (TechVendor/SampleCorp) or "SOFTWARE SERVICES AGREEMENT" (Reliable/Midwest).`
   );
+}
+
+/**
+ * Get Q&A fixture response for a given document and question.
+ * Returns an Answer type with groundedness validation.
+ * Throws if no fixture is found for the document.
+ */
+export function getFixtureQAResponse(documentText: string, question: string): Answer {
+  const head = documentText.substring(0, 300).toUpperCase();
+  const full = documentText.toUpperCase();
+
+  let fixtureKey: string | null = null;
+
+  // Match by contract type
+  if (head.includes('MASTER SERVICE AGREEMENT') && (head.includes('TECHVENDOR') || full.includes('SAMPLECHECKCORP'))) {
+    fixtureKey = 'contract-with-clauses';
+  } else if (
+    head.includes('SOFTWARE SERVICES AGREEMENT') &&
+    (full.includes('RELIABLE SOFTWARE') || full.includes('MIDWEST MANUFACTURING'))
+  ) {
+    fixtureKey = 'contract-clean';
+  } else if (full.includes('TECHVENDOR') && full.includes('SAMPLECHECKCORP')) {
+    fixtureKey = 'contract-with-clauses';
+  } else if (full.includes('RELIABLE SOFTWARE PARTNERS') && full.includes('MIDWEST')) {
+    fixtureKey = 'contract-clean';
+  }
+
+  if (!fixtureKey || !fixtureQAResponses[fixtureKey]) {
+    throw new Error(
+      `No Q&A fixture found for this document. Use contract starting with "MASTER SERVICE AGREEMENT" (TechVendor/SampleCorp) or "SOFTWARE SERVICES AGREEMENT" (Reliable/Midwest).`
+    );
+  }
+
+  const qaMap = fixtureQAResponses[fixtureKey];
+  const answer = qaMap[question];
+
+  if (!answer) {
+    throw new Error(
+      `No Q&A fixture found for question: "${question}". Available questions: ${Object.keys(qaMap).join(', ')}`
+    );
+  }
+
+  return answer;
 }

@@ -177,6 +177,49 @@
   color: var(--split-flap-cream);
 }
 
+.stateSelectsGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stateSelect {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.select {
+  background: var(--terminal-night-raised);
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+  color: var(--split-flap-cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.select:hover {
+  border-color: var(--worn-card-stock);
+}
+
+.select:focus {
+  outline: 2px solid var(--focus-gold);
+  outline-offset: 2px;
+}
+
+.select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.required {
+  color: var(--gate-change-red);
+}
+
 @media (max-width: 760px) {
   .page {
     padding: 28px 16px 56px;
@@ -188,6 +231,10 @@
 
   .textarea {
     min-height: 150px;
+  }
+
+  .stateSelectsGroup {
+    grid-template-columns: 1fr;
   }
 
   .actions {
