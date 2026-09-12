@@ -15,10 +15,10 @@ only gets text ready to be analyzed.
 
 **Blocked by:** None
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A signer can paste text into a box and it's captured as `documentText`
-- [ ] Multiple pasted documents can be combined into one `documentText`
-- [ ] Pasting nothing (or whitespace only) is rejected before any downstream
+- [x] A signer can paste text into a box and it's captured as `documentText`
+- [x] Multiple pasted documents can be combined into one `documentText`
+- [x] Pasting nothing (or whitespace only) is rejected before any downstream
       call, with a clear message
-- [ ] The "reads only what you gave it" notice is shown
+- [x] The "reads only what you gave it" notice is shown

@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import styles from "./page.module.css";
+import { ResultScreen } from "@/components/ResultScreen";
+import { analyzeContract } from "@/lib/analysis";
+import { getFixtureResponse } from "@/lib/fixture-responses";
+import { TestModelBoundary } from "@/lib/model-boundary";
+import { Analysis } from "@/lib/model-boundary";
 
 export default function NewReview() {
   const [documentText, setDocumentText] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [analysis, setAnalysis] = useState<Analysis | null>(null);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDocumentText(e.target.value);
@@ -14,22 +21,76 @@ export default function NewReview() {
     setSuccess(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const trimmed = documentText.trim();
     if (!trimmed) {
       setError("Please paste a contract document to continue.");
       return;
     }
-    setSuccess(true);
+
+    setLoading(true);
     setError("");
-    // TODO: Next step will send documentText to analysis
+    setSuccess(false);
+
+    try {
+      // Get fixture response
+      const fixtureAnalysis = getFixtureResponse(trimmed);
+
+      // Create test model boundary with fixture data
+      const fixtureMapping: { [key: string]: { analysis?: Analysis } } = {
+        [`analyze:${trimmed.substring(0, 50)}`]: { analysis: fixtureAnalysis },
+      };
+
+      const testBoundary = new TestModelBoundary(fixtureMapping);
+
+      // Call analyzeContract with test boundary
+      const result = await analyzeContract(
+        {
+          documentText: trimmed,
+          redLines: [],
+          governingLawState: "unknown",
+          operatingState: "unknown",
+        },
+        testBoundary
+      );
+
+      setAnalysis(result);
+      setSuccess(true);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to analyze contract";
+      setError(errorMessage);
+      setAnalysis(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClear = () => {
     setDocumentText("");
     setError("");
     setSuccess(false);
+    setAnalysis(null);
   };
+
+  if (analysis) {
+    return (
+      <main className={styles.page}>
+        <div className={styles.container}>
+          <ResultScreen analysis={analysis} />
+          <div className={styles.actions} style={{ marginTop: "44px" }}>
+            <button
+              type="button"
+              className={styles.clearBtn}
+              onClick={handleClear}
+            >
+              Analyze another contract
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.page}>
@@ -53,12 +114,13 @@ export default function NewReview() {
               onChange={handleTextChange}
               placeholder="Paste your contract text here. You can paste multiple documents. They'll be combined into one."
               rows={12}
+              disabled={loading}
             />
           </div>
 
           {error && <div className={styles.error}>{error}</div>}
 
-          {success && documentText.trim() && (
+          {success && documentText.trim() && !analysis && (
             <div className={styles.success}>
               Contract captured ({documentText.trim().length} characters). Ready
               to analyze.
@@ -76,10 +138,11 @@ export default function NewReview() {
               type="button"
               className={styles.submitBtn}
               onClick={handleSubmit}
+              disabled={loading}
             >
-              Analyze contract
+              {loading ? "Analyzing..." : "Analyze contract"}
             </button>
-            {documentText && (
+            {documentText && !loading && (
               <button
                 type="button"
                 className={styles.clearBtn}

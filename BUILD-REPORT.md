@@ -8,10 +8,11 @@
 
 | Ticket | Title | Status | Reason |
 |--------|-------|--------|--------|
-| 00 | Project scaffold & tooling | in-progress | Model boundary interface not yet defined |
-| 01 | Auth & account-scoped persistence | in-progress | Ready for agent; two-account access test deferred until test runner exists |
-| 02 | Document intake (paste) | ready-for-agent | Starting |
-| 03–12 | Analysis module tickets | blocked | Depend on 02 or model boundary |
+| 00 | Project scaffold & tooling | ✅ done | Vitest setup, model boundary interface, test fixtures |
+| 01 | Auth & account-scoped persistence | ✅ done | Live-tested against Supabase; two-account test deferred |
+| 02 | Document intake (paste) | ✅ done | UI component, 8 integration tests passing |
+| 03 | Walking skeleton (analyze → result) | in-progress | Subagent building fixture wiring + integration test |
+| 04–12 | Analysis module tickets | ready-for-agent | Can start after 03 completes |
 | 13–17 | UI/persistence tickets | blocked | Depend on earlier analysis tickets |
 
 ## Decisions Made (No User)

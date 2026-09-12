@@ -36,7 +36,7 @@ export function ResultScreen({ analysis }: ResultScreenProps) {
       {analysis.verdict.kind === 'clean' ? (
         <div style={{ marginBottom: 'var(--spacing-xl)' }}>
           <h1 style={{ color: 'var(--split-flap-cream)', marginBottom: 'var(--spacing-md)' }}>
-            You're probably fine.
+            You&apos;re probably fine.
           </h1>
           <p className="text-dimmed">
             No Blocker or Push issues found. {analysis.verdict.notesCount} note
@@ -103,7 +103,7 @@ export function ResultScreen({ analysis }: ResultScreenProps) {
 
                 {/* Quote preview */}
                 <div style={{ fontSize: '13px', color: 'var(--worn-card-stock)' }}>
-                  "{flag.sourceSentence.substring(0, 80)}..."
+                  &quot;{flag.sourceSentence.substring(0, 80)}&hellip;&quot;
                 </div>
 
                 {/* Expand toggle */}
