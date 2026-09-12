@@ -1,4 +1,113 @@
-# Build Report: Tickets 05, 06, 07, & 09 — Citation Integrity, Confidence Markers, Clean Verdict & Also-Seen Testing
+# Build Report: Tickets 05–09 — Citation Integrity, Confidence Markers, Clean Verdict, Counter-offers & Also-Seen Testing
+
+## Ticket 08: Counter-offer Display & Specificity
+
+**Status:** Counter-offer expand/collapse fully implemented and tested. All 109 tests passing (includes 15 new tests for counter-offers). Specificity verified: all 5 fixture counter-offers address their specific clauses, not generic boilerplate.
+
+### Summary
+
+Implemented counter-offer expand/collapse feature in ResultScreen with state management for independent flag expansion. Each expanded flag displays "SUGGESTED LANGUAGE" section with specific, actionable counter-offer text. All counter-offers are grounded in the specific clause language (ADR 0004, Eval criterion 7).
+
+### Counter-Offer Specificity Verification
+
+ADR 0004: "Counter-offer per flag must be specific, grounded in what the clause actually says"
+
+✅ **All 5 fixture counter-offers are specific to their clause:**
+
+| Clause Type | Counter-Offer Focus | Specificity Level |
+|---|---|---|
+| **personal-guarantee** | Remove clause OR limit to authority representation; company solely liable | ✓ Addresses personal liability directly |
+| **uncapped-indemnification** | Cap: actual 3rd-party claims, liability ≤ fees paid (12 months) | ✓ Addresses cap, time limit, fee-based calculation |
+| **unilateral-termination** | Require mutual rights: breach-only OR 90-day convenience | ✓ Addresses asymmetry, kill fee via notice period |
+| **ip-assignment** | Client owns custom work; vendor retains pre-existing tools/knowledge | ✓ Addresses work-product vs. pre-existing boundary |
+| **confidentiality-overreach** | Restrict: no name/logo/info without consent; exempt law/performance | ✓ Addresses brand use + competitor disclosure specifically |
+
+**Verification Method:** Each counter-offer references the specific clause language and proposes precise contract modifications. None are generic (e.g., "negotiate this clause"); all are grounded in the actual problem (e.g., "personal liability for all obligations" → "remove or limit to authority").
+
+### Implementation Details
+
+**Component State Management:**
+- `expandedFlags: Set<number>` tracks which flag indices are expanded
+- `toggleExpand(idx)` toggles presence of idx in the Set
+- Independent state per flag (expanding one doesn't affect others)
+
+**UI Display:**
+- Expand button (›) rotates 90° when expanded (via CSS transform)
+- Counter-offer appears below flag with:
+  - "SUGGESTED LANGUAGE" heading (monospace, secondary text, 11px)
+  - Counter-offer text (monospace, 12px, amber accent border left)
+  - Dashed border container matching DESIGN.md
+  - Indentation and padding for visual hierarchy
+
+### Test Coverage (15 new tests)
+
+**New test file:** `tests/counter-offers.test.tsx` — 15 comprehensive test cases
+
+- **Visibility (2 tests):**
+  - Counter-offer NOT visible initially
+  - Expand button displays › character
+
+- **Expand/Collapse (2 tests):**
+  - Counter-offer appears when expand button clicked
+  - Counter-offer hidden when collapse button clicked again
+
+- **Fixture Specificity (5 tests, one per fixture flag):**
+  - personal-guarantee: shows "Remove the personal guarantee clause entirely"
+  - uncapped-indemnification: shows "Cap indemnity" + "12 months preceding the claim"
+  - unilateral-termination: shows "Require mutual termination rights" + "90 days"
+  - ip-assignment: shows "Clarify IP ownership" + "Client owns all custom work product"
+  - confidentiality-overreach: shows "Restrict use" + "prior written consent"
+
+- **Multiple Flags Independent State (1 test):**
+  - First flag can be expanded independently of second
+  - Both can be expanded simultaneously
+  - Each collapse independently
+
+- **Styling & Visual Rendering (3 tests):**
+  - Expanded counter-offer has dashed border + proper styling
+  - "SUGGESTED LANGUAGE" heading displays in monospace
+  - Multiple flags have independent expand states
+
+- **Clean Verdicts (2 tests):**
+  - No counter-offers displayed when verdict is clean
+  - No "SUGGESTED LANGUAGE" heading appears
+
+### Test Results
+
+```
+✓ Test Files: 10 passed (8 previous + 1 new counter-offers.test.tsx + 1 existing)
+✓ Tests: 109 passed (94 previous + 15 new counter-offer tests)
+✓ Duration: ~4s
+```
+
+### Files Touched
+
+- ✅ `src/components/ResultScreen.tsx` — Implement expand/collapse state + counter-offer display
+  - Added `useState<Set<number>>` for expanded flag tracking
+  - Added `toggleExpand(idx)` handler
+  - Modified expand button to onClick handler with cursor pointer
+  - Added counter-offer display div with SUGGESTED LANGUAGE heading
+  - Added styling: dashed border, monospace font, amber accent
+  - Added ADR 0004 comment block explaining specificity requirement
+  
+- ✅ `tests/counter-offers.test.tsx` (NEW) — 15 test cases
+  - Section 1: Initial visibility (2 tests)
+  - Section 2: Expand/collapse behavior (2 tests)
+  - Section 3: Fixture specificity verification (5 tests)
+  - Section 4: Multiple flags independent state (1 test)
+  - Section 5: Styling & visual rendering (3 tests)
+  - Section 6: Clean verdicts (2 tests)
+
+- ✅ `BUILD-REPORT.md` — Updated with Ticket 08 results
+
+### Verification Checklist
+
+✅ **npm run typecheck** — PASS (no TypeScript errors)
+✅ **npm test -- --run** — PASS (109 tests, 15 new)
+✅ **npm run lint** — PASS (no new warnings)
+✅ **npm run build** — PASS (Next.js build successful)
+
+---
 
 ## Ticket 09: Also-Seen Section
 
@@ -304,6 +413,8 @@ Implement comprehensive citation integrity testing (Ticket 05)
 ---
 
 **Status Ticket 05:** ✅ COMPLETE — Citation integrity is fully tested. All 5 fixtures pass verification.
+
+**Status Ticket 06:** ✅ COMPLETE — Confidence markers & two-register output implemented. All 5 fixtures display correct confidence levels. 'clear' (4 flags) show no label. 'our-read' (1 flag) shows dimmed label. 9 new tests added, all passing.
 
 ---
 
