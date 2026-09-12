@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
-
-const SOURCE_SENTENCE =
-  '"By executing this Agreement, the undersigned individual personally guarantees full payment of all fees owed by Customer hereunder."';
-
-const COUNTER_OFFER =
-  '"Strike this Section in its entirety; Customer’s obligations are limited to the entity executing this Agreement."';
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -30,23 +25,106 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-export default function Home() {
+type FlagRowProps = {
+  severity: "BLOCKER" | "PUSH" | "NOTE";
+  clause: string;
+  why: string;
+  sourceSentence: string;
+  counterOffer: string;
+  counterOfferLabel?: string;
+  showCopy?: boolean;
+};
+
+function FlagRow({
+  severity,
+  clause,
+  why,
+  sourceSentence,
+  counterOffer,
+  counterOfferLabel = "Counter-offer",
+  showCopy = true,
+}: FlagRowProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   function handleCopy() {
-    navigator.clipboard?.writeText(COUNTER_OFFER).catch(() => {});
+    navigator.clipboard?.writeText(counterOffer).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 1600);
   }
 
-  function scrollToTeaser() {
-    document.getElementById("teaser")?.scrollIntoView({ behavior: "smooth" });
-  }
+  const sevClass =
+    severity === "BLOCKER"
+      ? styles.sevLabel
+      : severity === "PUSH"
+        ? `${styles.sevLabel} ${styles.sevLabelPush}`
+        : `${styles.sevLabel} ${styles.sevLabelNote}`;
 
   return (
+    <div>
+      <button
+        type="button"
+        className={styles.row}
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        <span className={sevClass}>{severity}</span>
+        <span className={styles.clauseCol}>
+          <span className={styles.clause}>{clause}</span>
+          <span className={styles.why}>{why}</span>
+        </span>
+        <Chevron open={open} />
+      </button>
+      <div
+        className={
+          open
+            ? `${styles.detailClip} ${styles.detailClipOpen}`
+            : styles.detailClip
+        }
+      >
+        <div className={styles.detailInner}>
+          <div className={styles.detailContent}>
+            <div>
+              <div className={styles.detailHeading}>Exact source sentence</div>
+              <blockquote className={styles.quote}>
+                &ldquo;{sourceSentence}&rdquo;
+              </blockquote>
+            </div>
+            <div>
+              <div className={styles.detailHeading}>{counterOfferLabel}</div>
+              <p className={styles.counter}>
+                {showCopy ? `“${counterOffer}”` : counterOffer}
+              </p>
+              {showCopy && (
+                <button
+                  type="button"
+                  className={
+                    copied
+                      ? `${styles.copyBtn} ${styles.copyBtnCopied}`
+                      : styles.copyBtn
+                  }
+                  onClick={handleCopy}
+                >
+                  {copied ? "Copied" : "Copy counter-offer"}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
     <main className={styles.page}>
-      <div className={styles.wordmark}>REDLINE</div>
+      <div className={styles.nav}>
+        <div className={styles.wordmark}>REDLINE</div>
+        <Link className={styles.signIn} href="/login">
+          Sign in
+        </Link>
+      </div>
 
       <div className={styles.hero}>
         <h1 className={styles.headline}>The same sentence. Read two ways.</h1>
@@ -69,91 +147,50 @@ export default function Home() {
         <div className={styles.panel}>
           <div className={styles.panelLabel}>What Redline shows you</div>
           <div className={styles.after}>
-            <button
-              type="button"
-              className={styles.row}
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
-            >
-              <span className={styles.sevLabel}>BLOCKER</span>
-              <span className={styles.clauseCol}>
-                <span className={styles.clause}>Personal guarantee</span>
-                <span className={styles.why}>
-                  Makes you personally liable for a business debt, not just
-                  the company.
-                </span>
-              </span>
-              <Chevron open={open} />
-            </button>
-            <div
-              className={
-                open
-                  ? `${styles.detailClip} ${styles.detailClipOpen}`
-                  : styles.detailClip
-              }
-            >
-              <div className={styles.detailInner}>
-                <div className={styles.detailContent}>
-                  <div>
-                    <div className={styles.detailHeading}>
-                      Exact source sentence
-                    </div>
-                    <blockquote className={styles.quote}>
-                      {SOURCE_SENTENCE}
-                    </blockquote>
-                  </div>
-                  <div>
-                    <div className={styles.detailHeading}>Counter-offer</div>
-                    <p className={styles.counter}>{COUNTER_OFFER}</p>
-                    <button
-                      type="button"
-                      className={
-                        copied
-                          ? `${styles.copyBtn} ${styles.copyBtnCopied}`
-                          : styles.copyBtn
-                      }
-                      onClick={handleCopy}
-                    >
-                      {copied ? "Copied" : "Copy counter-offer"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <FlagRow
+              severity="BLOCKER"
+              clause="Personal guarantee"
+              why="Makes you personally liable for a business debt, not just the company."
+              sourceSentence="By executing this Agreement, the undersigned individual personally guarantees full payment of all fees owed by Customer hereunder."
+              counterOffer="Strike this Section in its entirety; Customer’s obligations are limited to the entity executing this Agreement."
+            />
           </div>
         </div>
       </div>
 
       <div className={styles.ctaRow}>
-        <button type="button" className={styles.cta} onClick={scrollToTeaser}>
-          See your first contract reviewed
-        </button>
+        <Link className={styles.cta} href="/login?mode=signup">
+          Create your account
+        </Link>
       </div>
 
       <div className={styles.teaser} id="teaser">
-        <div className={styles.teaserLabel}>This is one row of five.</div>
+        <div className={styles.teaserLabel}>
+          Two more of the five flags this contract would surface:
+        </div>
         <div className={styles.teaserBoard}>
-          <div className={styles.teaserRow}>
-            <span className={`${styles.teaserSev} ${styles.teaserSevPush}`}>
-              PUSH
-            </span>
-            <span className={styles.teaserClause}>
-              One-sided limitation of liability
-            </span>
-          </div>
-          <div className={styles.teaserRow}>
-            <span className={`${styles.teaserSev} ${styles.teaserSevNote}`}>
-              NOTE
-            </span>
-            <span className={styles.teaserClause}>
-              Governing law: Delaware
-            </span>
-          </div>
+          <FlagRow
+            severity="PUSH"
+            clause="One-sided limitation of liability"
+            why="Leverage decides whether this is still signable if they refuse to change it."
+            sourceSentence="In no event shall Provider's aggregate liability exceed the fees paid by Customer in the one (1) month preceding the event giving rise to the claim, and Provider shall have no liability for indirect, incidental, or consequential damages."
+            counterOffer="Provider's aggregate liability shall not be less than twelve (12) months of fees paid, and the exclusion of indirect damages shall not apply to breaches of confidentiality or data-protection obligations."
+          />
+          <FlagRow
+            severity="NOTE"
+            clause="Governing law: Delaware"
+            why="Worth knowing: sets the rules for everything else above."
+            sourceSentence="This Agreement shall be governed by the laws of the State of Delaware, without regard to conflict of law principles."
+            counterOffer="Informational: this determines how every other clause is interpreted and enforced. No action needed on its own."
+            counterOfferLabel="What to do"
+            showCopy={false}
+          />
         </div>
         <p className={styles.footnote}>
           This contract is synthetic: built to show how Redline reads a
-          document, not a real submission. Redline is pre-launch, so no
-          analysis runs on this page yet.
+          document, not a real submission. Redline is pre-launch: creating an
+          account reserves your place, but pasting your own contract isn&apos;t
+          live yet.
         </p>
       </div>
     </main>
