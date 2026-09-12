@@ -1,0 +1,38 @@
+EMPLOYMENT AGREEMENT
+
+This Employment Agreement ("Agreement") is entered into as of the date of execution between Acme Technologies, Inc., a Delaware corporation ("Company"), and John Smith, an individual ("Employee").
+
+1. POSITION AND DUTIES
+Employee shall serve as Senior Software Engineer, reporting to the Director of Engineering. Employee shall perform all duties and responsibilities as assigned by the Company.
+
+2. COMPENSATION
+Company shall pay Employee an annual salary of $150,000, payable in bi-weekly installments.
+
+3. NON-COMPETE CLAUSE
+Employee acknowledges that the Company's business is highly competitive and relies on trade secrets, proprietary information, and customer relationships developed through years of investment and effort. Therefore, Employee agrees that, during the term of employment and for a period of two (2) years following the termination of employment for any reason, Employee shall not, directly or indirectly, engage in any business that competes with the Company's business within a radius of fifty (50) miles from the Company's principal place of business.
+
+For purposes of this Agreement, "competes with the Company's business" means any activities relating to software development, consulting, or services that are the same as or substantially similar to those offered by the Company as of the date of Employee's termination.
+
+Employee further agrees that any violation of this Non-Compete Clause will cause irreparable harm to the Company for which monetary damages would be an insufficient remedy, and the Company shall be entitled to seek equitable relief, including specific performance and injunctive relief, without posting bond.
+
+4. TERM AND TERMINATION
+This Agreement shall commence on the date of execution and shall continue until terminated by either party upon thirty (30) days' written notice to the other party. Notwithstanding the foregoing, the Non-Compete Clause shall survive termination and remain in effect for the period specified therein.
+
+5. GENERAL PROVISIONS
+(a) Entire Agreement: This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof.
+(b) Governing Law: This Agreement shall be governed by and construed in accordance with the laws of [STATE], without regard to its conflict of law provisions.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first written above.
+
+ACME TECHNOLOGIES, INC.
+
+By: _________________________
+Name: _______________________
+Title: ________________________
+Date: _________________________
+
+EMPLOYEE
+
+By: _________________________
+Name: John Smith
+Date: _________________________
