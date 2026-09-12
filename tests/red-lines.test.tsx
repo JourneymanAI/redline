@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { analyzeContract } from '@/lib/analysis';
 import { fixtureResponses } from '@/lib/fixture-responses';
-import type { ModelBoundary, Answer, Analysis, Flag } from '@/lib/model-boundary';
+import type { Analysis } from '@/lib/model-boundary';
 import { TestModelBoundary } from '@/lib/model-boundary';
 
 /**
