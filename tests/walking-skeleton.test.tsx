@@ -69,6 +69,16 @@ This Agreement, including any applicable SOW, constitutes the entire agreement b
     // Verify text was entered
     expect(textarea.value).toBe(fixtureText);
 
+    // Select jurisdiction states (required)
+    const governingLawSelect = screen.getByLabelText(
+      /Governing law state/i
+    ) as HTMLSelectElement;
+    const operatingStateSelect = screen.getByLabelText(
+      /Operating state/i
+    ) as HTMLSelectElement;
+    fireEvent.change(governingLawSelect, { target: { value: "CA" } });
+    fireEvent.change(operatingStateSelect, { target: { value: "CA" } });
+
     // Click Analyze button
     const analyzeBtn = screen.getByRole("button", { name: /Analyze contract/i });
     fireEvent.click(analyzeBtn);
@@ -151,6 +161,16 @@ If any provision is found invalid or unenforceable, the remaining provisions sha
     ) as HTMLTextAreaElement;
     fireEvent.change(textarea, { target: { value: cleanContractText } });
 
+    // Select jurisdiction states (required)
+    const governingLawSelect = screen.getByLabelText(
+      /Governing law state/i
+    ) as HTMLSelectElement;
+    const operatingStateSelect = screen.getByLabelText(
+      /Operating state/i
+    ) as HTMLSelectElement;
+    fireEvent.change(governingLawSelect, { target: { value: "CO" } });
+    fireEvent.change(operatingStateSelect, { target: { value: "MI" } });
+
     const analyzeBtn = screen.getByRole("button", { name: /Analyze contract/i });
     fireEvent.click(analyzeBtn);
 
@@ -218,6 +238,16 @@ The signatory on behalf of Client, if an individual or if Client is a partnershi
     ) as HTMLTextAreaElement;
     fireEvent.change(textarea, { target: { value: contractText } });
 
+    // Select jurisdiction states (required)
+    const governingLawSelect = screen.getByLabelText(
+      /Governing law state/i
+    ) as HTMLSelectElement;
+    const operatingStateSelect = screen.getByLabelText(
+      /Operating state/i
+    ) as HTMLSelectElement;
+    fireEvent.change(governingLawSelect, { target: { value: "CA" } });
+    fireEvent.change(operatingStateSelect, { target: { value: "CA" } });
+
     const analyzeBtn = screen.getByRole("button", { name: /Analyze contract/i });
     fireEvent.click(analyzeBtn);
 
@@ -252,6 +282,16 @@ The signatory on behalf of Client, if an individual or if Client is a partnershi
     fireEvent.change(textarea, {
       target: { value: "Some unknown contract text" },
     });
+
+    // Select jurisdiction states (required)
+    const governingLawSelect = screen.getByLabelText(
+      /Governing law state/i
+    ) as HTMLSelectElement;
+    const operatingStateSelect = screen.getByLabelText(
+      /Operating state/i
+    ) as HTMLSelectElement;
+    fireEvent.change(governingLawSelect, { target: { value: "TX" } });
+    fireEvent.change(operatingStateSelect, { target: { value: "TX" } });
 
     const analyzeBtn = screen.getByRole("button", { name: /Analyze contract/i });
     fireEvent.click(analyzeBtn);
