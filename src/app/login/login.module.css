@@ -1,0 +1,93 @@
+.page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 88px 28px;
+}
+
+.wordmark {
+  font-family: var(--font-board);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  margin-bottom: 44px;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--font-board);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--worn-card-stock);
+}
+
+.input {
+  background: var(--terminal-night-raised);
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+  color: var(--split-flap-cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 12px 14px;
+}
+
+.input::placeholder {
+  color: var(--worn-card-stock);
+}
+
+.submit {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  background: transparent;
+  border: 1px solid var(--worn-card-stock);
+  border-radius: var(--radius);
+  color: var(--split-flap-cream);
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  border-color: var(--split-flap-cream);
+}
+
+.toggle {
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--split-flap-cream-dimmed);
+}
+
+.toggle a {
+  color: var(--split-flap-cream);
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--gate-change-red);
+  margin-bottom: 16px;
+}
+
+.notice {
+  font-size: 13px;
+  color: var(--delayed-amber);
+  margin-bottom: 16px;
+}
