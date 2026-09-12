@@ -57,3 +57,98 @@ a {
   outline: 2px solid var(--focus-gold);
   outline-offset: 2px;
 }
+
+/* Form elements */
+input,
+textarea {
+  background-color: var(--terminal-night-raised);
+  border: 1px solid var(--housing-seam);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--split-flap-cream);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--worn-card-stock);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--split-flap-cream);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--split-flap-cream);
+  font-size: 14px;
+}
+
+/* Button styles */
+.btn-primary {
+  border: 1px solid var(--worn-card-stock);
+  padding: 0 18px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  border-color: var(--split-flap-cream);
+}
+
+.btn-primary:disabled {
+  border-color: var(--housing-seam);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  border: 1px solid var(--housing-seam);
+  padding: 8px 14px;
+}
+
+.btn-ghost:hover {
+  background-color: var(--hover-wash);
+  border-color: var(--worn-card-stock);
+}
+
+/* Utility classes */
+.mono {
+  font-family: var(--font-board);
+}
+
+.text-dimmed {
+  color: var(--split-flap-cream-dimmed);
+}
+
+.text-secondary {
+  color: var(--worn-card-stock);
+}
+
+.text-blocker {
+  color: var(--gate-change-red);
+}
+
+.text-push {
+  color: var(--delayed-amber);
+}
+
+/* Layout */
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+@media (max-width: 860px) {
+  .container {
+    padding: 0 16px;
+  }
+}
