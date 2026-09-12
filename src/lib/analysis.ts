@@ -30,7 +30,20 @@ export async function analyzeContract(
     operatingState,
   });
 
-  // Verify citation integrity: every flag's sourceSentence must be a verbatim substring
+  // ========== CITATION INTEGRITY CHECK (Criterion 1 from PRD § "What good looks like") ==========
+  // This check is a hard gate: citation integrity must be 100%.
+  //
+  // Every flag returned to the user must have a source sentence that is a VERBATIM substring
+  // of the documentText. Flags whose source sentences are not found (e.g., due to:
+  //   - OCR errors
+  //   - LLM hallucination of clause text
+  //   - Malformed sourceSentence fields
+  // ) are silently filtered out before being returned to the user.
+  //
+  // Why it matters: The UI quotes this sentence back to the user (ResultScreen line 106).
+  // If the quote is not actually in the document, the user loses trust in the analysis.
+  //
+  // See also: ADR 0001 "Citation Integrity" (docs/adr/0001-citation-integrity.md)
   const verifiedFlags = analysis.flags.filter((flag) => {
     const isSubstring = documentText.includes(flag.sourceSentence);
     if (!isSubstring) {

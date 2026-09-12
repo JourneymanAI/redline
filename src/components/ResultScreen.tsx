@@ -101,7 +101,18 @@ export function ResultScreen({ analysis }: ResultScreenProps) {
                   )}
                 </div>
 
-                {/* Quote preview */}
+                {/* Quote preview
+                  ===============
+                  Display the first 80 characters of the source sentence from the contract.
+                  The sourceSentence has already been verified as a verbatim substring of the
+                  document (see analysis.ts citation integrity check).
+
+                  Truncate to 80 chars to fit the grid column (300px). If the sentence is longer,
+                  append … (ellipsis) to signal the user can expand for the full quote.
+
+                  Why 80 chars? It's approximately the limit before the UI wraps on a 300px column
+                  at 13px font size. At 300px width, ~80 characters + "…" fits cleanly without wrapping.
+                */}
                 <div style={{ fontSize: '13px', color: 'var(--worn-card-stock)' }}>
                   &quot;{flag.sourceSentence.substring(0, 80)}&hellip;&quot;
                 </div>
