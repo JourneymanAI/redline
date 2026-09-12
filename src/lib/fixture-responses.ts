@@ -90,16 +90,29 @@ export const fixtureResponses = {
 export type FixtureName = keyof typeof fixtureResponses;
 
 export function getFixtureResponse(documentText: string): Analysis {
-  const normalized = documentText.substring(0, 100).toUpperCase();
+  const head = documentText.substring(0, 300).toUpperCase();
+  const full = documentText.toUpperCase();
 
-  if (normalized.includes('TECHVENDOR') || normalized.includes('SAMPLECHECKCORP')) {
+  // Match by contract type
+  if (head.includes('MASTER SERVICE AGREEMENT') && (head.includes('TECHVENDOR') || full.includes('SAMPLECHECKCORP'))) {
     return fixtureResponses['contract-with-clauses']();
   }
-  if (normalized.includes('RELIABLE SOFTWARE PARTNERS') || normalized.includes('MIDWEST')) {
+  if (
+    head.includes('SOFTWARE SERVICES AGREEMENT') &&
+    (full.includes('RELIABLE SOFTWARE') || full.includes('MIDWEST MANUFACTURING'))
+  ) {
+    return fixtureResponses['contract-clean']();
+  }
+
+  // Fallback: detect by company names
+  if (full.includes('TECHVENDOR') && full.includes('SAMPLECHECKCORP')) {
+    return fixtureResponses['contract-with-clauses']();
+  }
+  if (full.includes('RELIABLE SOFTWARE PARTNERS') && full.includes('MIDWEST')) {
     return fixtureResponses['contract-clean']();
   }
 
   throw new Error(
-    `No fixture found for this document. Please use one of the fixture contracts in tests/fixtures/ for testing.`
+    `No fixture found. Use contract starting with "MASTER SERVICE AGREEMENT" (TechVendor/SampleCorp) or "SOFTWARE SERVICES AGREEMENT" (Reliable/Midwest).`
   );
 }
