@@ -1,5 +1,35 @@
 import type { Analysis } from './model-boundary';
 
+/**
+ * Fixture Severity Assignments (ADR 0003 — "The flagging model")
+ *
+ * BLOCKER: Do not sign as-is
+ *   - Personal guarantee: Exposes signatory to unlimited personal liability
+ *   - Uncapped indemnification: Indemnity with no cap, no time limit, no mitigation requirement
+ *   - Uncapped/one-sided liability: Liability that is unlimited or asymmetric
+ *   - Inescapable auto-renew: Contract renews indefinitely without opt-out
+ *
+ * PUSH: Ask for a change
+ *   - Unilateral termination without kill fee: Vendor can exit anytime; client has no recourse
+ *   - IP assignment: Vendor retains ownership of work created for client
+ *   - Other negotiable clauses that work against the signer
+ *
+ * NOTE: Know it is there
+ *   - Confidentiality overreach: Vendor can share info without permission
+ *   - Other unusual but negotiable clauses
+ *
+ * Error preference:
+ *   - Blocker set: miss nothing; over-flag when unsure
+ *   - Push/Note: prefer silence to a shaky flag
+ *
+ * Fixture breakdown:
+ *   - personal-guarantee: Blocker (unlimited personal liability for all obligations)
+ *   - uncapped-indemnification: Blocker (no cap, no time limit, no mitigation)
+ *   - unilateral-termination-without-kill-fee: Push (vendor exits with 30 days notice, no cause needed)
+ *   - ip-assignment: Push (vendor owns all work including "before/after" agreement)
+ *   - confidentiality-overreach: Note (vendor can share with competitors without permission)
+ */
+
 export const fixtureResponses = {
   'contract-with-clauses': (): Analysis => ({
     summary:

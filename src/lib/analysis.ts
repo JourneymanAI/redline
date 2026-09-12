@@ -41,7 +41,10 @@ export async function analyzeContract(
     return isSubstring;
   });
 
-  // Determine verdict: if no Blocker or Push flags exist, verdict is "clean"
+  // Determine verdict: if no Blocker or Push flags exist, verdict is "clean" (ADR 0003, 0004)
+  // - "flags" verdict: one or more Blocker or Push flags exist → signer should take action
+  // - "clean" verdict: only Note flags (or no flags) exist → contract is acceptable as-is
+  // Per ADR 0004: "Never manufactures flags to justify the review"
   const hasBlockerOrPush = verifiedFlags.some(
     (f) => f.severity === 'Blocker' || f.severity === 'Push'
   );
