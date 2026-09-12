@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import { ResultScreen } from "@/components/ResultScreen";
 import { QASection } from "@/components/QASection";
 import { analyzeContract, answerFromDocument } from "@/lib/analysis";
-import { getFixtureResponse, getFixtureQAResponse } from "@/lib/fixture-responses";
+import { getFixtureResponse } from "@/lib/fixture-responses";
 import { TestModelBoundary } from "@/lib/model-boundary";
 import { Analysis, Answer } from "@/lib/model-boundary";
 
@@ -185,7 +185,7 @@ export default function NewReview() {
               Red lines (non-negotiables) — optional
             </label>
             <p className={styles.description} style={{ fontSize: '13px', marginBottom: '8px' }}>
-              Add phrases from this contract that you won't accept. Redline will flag any clause that crosses these lines.
+              Add phrases from this contract that you won&apos;t accept. Redline will flag any clause that crosses these lines.
             </p>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
               <input

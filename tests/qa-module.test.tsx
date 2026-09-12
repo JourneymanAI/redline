@@ -201,7 +201,7 @@ This Master Service Agreement ("Agreement") is entered into as of September 12, 
   describe('Groundedness validation: no fabricated answers', () => {
     it('should have answer property for addressed: true questions', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         if (answer.addressed === true) {
           expect(answer.answer).toBeDefined();
           expect(answer.answer.length).toBeGreaterThan(0);
@@ -211,7 +211,7 @@ This Master Service Agreement ("Agreement") is entered into as of September 12, 
 
     it('should have answer property for addressed: false questions (explaining why)', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         if (answer.addressed === false) {
           expect(answer.answer).toBeDefined();
           expect(answer.answer.length).toBeGreaterThan(0);
@@ -240,7 +240,7 @@ This Master Service Agreement ("Agreement") is entered into as of September 12, 
 
     it('should not have groundedIn for unanswerable questions', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         if (answer.addressed === false) {
           // Unanswerable questions may not have a specific groundedIn
           // since they're not grounded in a particular clause
@@ -255,7 +255,7 @@ This Master Service Agreement ("Agreement") is entered into as of September 12, 
   describe('Q&A answer content validation', () => {
     it('all answers should be non-empty strings', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         expect(typeof answer.answer).toBe('string');
         expect(answer.answer.length).toBeGreaterThan(0);
       });
@@ -263,14 +263,14 @@ This Master Service Agreement ("Agreement") is entered into as of September 12, 
 
     it('all answers should have addressed property that is boolean', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         expect(typeof answer.addressed).toBe('boolean');
       });
     });
 
     it('groundedIn should be optional but string if present', () => {
       const qaMap = fixtureQAResponses['contract-with-clauses'];
-      Object.entries(qaMap).forEach(([question, answer]) => {
+      Object.entries(qaMap).forEach(([, answer]) => {
         if (answer.groundedIn !== undefined) {
           expect(typeof answer.groundedIn).toBe('string');
           expect(answer.groundedIn.length).toBeGreaterThan(0);

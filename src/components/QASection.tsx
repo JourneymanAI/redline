@@ -9,7 +9,7 @@ interface QASectionProps {
   onAnswer: (question: string) => Promise<Answer>;
 }
 
-export function QASection({ documentText, onAnswer }: QASectionProps) {
+export function QASection({ documentText: _, onAnswer }: QASectionProps) {
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<Answer | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export function QASection({ documentText, onAnswer }: QASectionProps) {
         <h2 className={styles.heading}>Questions about this contract?</h2>
         <p className={styles.description}>
           Ask anything about the contract text above. Redline will answer based
-          only on what's in the document.
+          only on what&apos;s in the document.
         </p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -84,7 +84,7 @@ export function QASection({ documentText, onAnswer }: QASectionProps) {
               {!answer.addressed && (
                 <div className={styles.notAddressed}>
                   <strong>Note:</strong> This contract does not directly address
-                  this topic. The answer above is based on the contract's scope.
+                  this topic. The answer above is based on the contract&apos;s scope.
                 </div>
               )}
 
