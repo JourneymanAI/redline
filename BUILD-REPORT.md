@@ -160,9 +160,20 @@ Implemented confidence marker display to distinguish high-confidence from lower-
 - ✓ Special characters (apostrophes, quotes) are preserved
 - ✓ Clean verdict shows no source sentence previews
 
+### confidence-markers.test.tsx (9 cases, Ticket 06)
+- ✓ 'clear' confidence markers don't display labels (default)
+- ✓ 'our-read' displays "OUR READ" with dimmed styling
+- ✓ 'unclear-get-help' displays "UNCLEAR — GET HELP" with warning styling
+- ✓ All 5 fixture flags display correct confidence markers
+- ✓ Multiple lower-confidence flags display independently
+- ✓ Long clause names don't break confidence marker display
+- ✓ Confidence markers positioned correctly (below severity label)
+- ✓ 'our-read' markers have correct dimmed text color (var(--text-secondary))
+- ✓ 'unclear-get-help' markers have correct warning color (var(--delayed-amber))
+
 **All tests passing:**
-- Test Files: 5 passed (was 3, now 5 with new test files)
-- Total Tests: 48 passed (was 30, now 48 with new test cases)
+- Test Files: 6 passed (was 5, now 6 with new confidence-markers test file)
+- Total Tests: 109 passed (was 100, now 109 with 9 new confidence marker tests)
 
 ## Code Changes
 
@@ -206,15 +217,16 @@ Implemented confidence marker display to distinguish high-confidence from lower-
 - All type checking passed
 
 ✅ **npm test -- --run** — PASS
-- Test Files: 5 passed (was 3, now 5)
-- Tests: 48 passed (was 30, now 48)
+- Test Files: 6 passed
+- Tests: 109 passed
   - citation-integrity.test.ts: 10 cases
   - result-screen-display.test.tsx: 8 cases
-  - + 30 existing cases from previous tickets
-- Duration: ~3.2s
+  - confidence-markers.test.tsx: 9 cases (NEW, Ticket 06)
+  - + 82 existing cases from previous tickets
+- Duration: ~4.5s
 
 ✅ **npm run lint** — PASS
-- No new errors
+- No errors
 - No warnings
 
 ✅ **npm run build** — PASS
@@ -245,10 +257,11 @@ Implemented confidence marker display to distinguish high-confidence from lower-
 ## Files Touched
 
 - ✅ `src/lib/analysis.ts` — Enhanced citation integrity check with documentation
-- ✅ `src/components/ResultScreen.tsx` — Added inline documentation for source sentence display
+- ✅ `src/components/ResultScreen.tsx` — Added inline documentation for source sentence display; added confidence marker display (Ticket 06)
 - ✅ `tests/citation-integrity.test.ts` — NEW: 10 test cases for citation verification
 - ✅ `tests/result-screen-display.test.tsx` — NEW: 8 test cases for UI display
-- ✅ `BUILD-REPORT.md` — Updated with Ticket 05 results
+- ✅ `tests/confidence-markers.test.tsx` — NEW: 9 test cases for confidence marker display (Ticket 06)
+- ✅ `BUILD-REPORT.md` — Updated with Ticket 05 & 06 results
 
 ## Commit Message
 
