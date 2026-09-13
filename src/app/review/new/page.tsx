@@ -6,8 +6,8 @@ import { ResultScreen } from "@/components/ResultScreen";
 import { QASection } from "@/components/QASection";
 import { analyzeContract, answerFromDocument } from "@/lib/analysis";
 import { getFixtureResponse } from "@/lib/fixture-responses";
-import { TestModelBoundary } from "@/lib/model-boundary";
-import { Analysis, Answer } from "@/lib/model-boundary";
+import { TestModelBoundary, OpenRouterBoundary } from "@/lib/model-boundary";
+import { Analysis, Answer, ModelBoundary } from "@/lib/model-boundary";
 
 // All 50 US states in alphabetical order
 const US_STATES = [
@@ -59,17 +59,25 @@ export default function NewReview() {
     setSuccess(false);
 
     try {
-      // Get fixture response
-      const fixtureAnalysis = getFixtureResponse(trimmed);
+      // Determine which model boundary to use
+      let modelBoundary: ModelBoundary;
 
-      // Create test model boundary with fixture data
-      const fixtureMapping: { [key: string]: { analysis?: Analysis } } = {
-        [`analyze:${trimmed.substring(0, 50)}`]: { analysis: fixtureAnalysis },
-      };
+      if (process.env.NEXT_PUBLIC_OPENROUTER_API_KEY && process.env.NEXT_PUBLIC_OPENROUTER_MODEL) {
+        // Use production OpenRouter boundary
+        modelBoundary = new OpenRouterBoundary(
+          process.env.NEXT_PUBLIC_OPENROUTER_API_KEY,
+          process.env.NEXT_PUBLIC_OPENROUTER_MODEL
+        );
+      } else {
+        // Fall back to test fixtures
+        const fixtureAnalysis = getFixtureResponse(trimmed);
+        const fixtureMapping: { [key: string]: { analysis?: Analysis } } = {
+          [`analyze:${trimmed.substring(0, 50)}`]: { analysis: fixtureAnalysis },
+        };
+        modelBoundary = new TestModelBoundary(fixtureMapping);
+      }
 
-      const newTestBoundary = new TestModelBoundary(fixtureMapping);
-
-      // Call analyzeContract with test boundary, passing selected jurisdiction states
+      // Call analyzeContract with the selected boundary
       const result = await analyzeContract(
         {
           documentText: trimmed,
@@ -77,11 +85,11 @@ export default function NewReview() {
           governingLawState,
           operatingState,
         },
-        newTestBoundary
+        modelBoundary
       );
 
       setAnalysis(result);
-      setTestBoundary(newTestBoundary);
+      setTestBoundary(modelBoundary instanceof TestModelBoundary ? modelBoundary : null);
       setSuccess(true);
     } catch (err) {
       const errorMessage =
