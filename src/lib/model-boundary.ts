@@ -52,6 +52,103 @@ interface FixtureMapping {
   [fixtureKey: string]: RecordedResponse;
 }
 
+export class OpenRouterBoundary implements ModelBoundary {
+  private apiKey: string;
+  private modelSlug: string;
+
+  constructor(apiKey: string, modelSlug: string) {
+    if (!apiKey || !modelSlug) {
+      throw new Error('OpenRouter API key and model slug are required');
+    }
+    this.apiKey = apiKey;
+    this.modelSlug = modelSlug;
+  }
+
+  async analyzeContract(input: {
+    documentText: string;
+    redLines: string[];
+    governingLawState: string | 'unknown' | 'non-us';
+    operatingState: string | 'unknown';
+  }): Promise<Analysis> {
+    const prompt = `Analyze this contract for risk clauses. Return JSON with: summary, flags (array of {clauseType, sourceSentence (verbatim from document), severity: "Blocker"|"Push"|"Note", counterOffer, confidenceMarker: "clear"|"our-read"|"unclear-get-help", reason, isRedLineTrigger: boolean, jurisdictionSensitive: boolean}), alsoSeen (array of {clauseType, description}), verdict {kind: "flags"|"clean", notesCount?: number}.
+
+Contract:
+${input.documentText}
+
+Red lines: ${input.redLines.join(', ') || 'none'}
+Governing law: ${input.governingLawState}
+Operating state: ${input.operatingState}`;
+
+    const response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: this.modelSlug,
+        messages: [{ role: 'user', content: prompt }],
+        response_format: { type: 'json_object' },
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`OpenRouter API error: ${error}`);
+    }
+
+    const data = await response.json() as { choices: Array<{ message: { content: string } }> };
+    const content = data.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error('No response from OpenRouter');
+    }
+
+    const parsed = JSON.parse(content) as Analysis;
+    return parsed;
+  }
+
+  async answerFromDocument(input: {
+    documentText: string;
+    question: string;
+  }): Promise<Answer> {
+    const prompt = `Answer this question based ONLY on the contract text. Return JSON with: {answer: string, groundedIn?: string (exact quote from document), addressed: boolean}.
+
+Contract:
+${input.documentText}
+
+Question: ${input.question}
+
+If the document doesn't address the question, set addressed: false and explain that in the answer field.`;
+
+    const response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: this.modelSlug,
+        messages: [{ role: 'user', content: prompt }],
+        response_format: { type: 'json_object' },
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`OpenRouter API error: ${error}`);
+    }
+
+    const data = await response.json() as { choices: Array<{ message: { content: string } }> };
+    const content = data.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error('No response from OpenRouter');
+    }
+
+    const parsed = JSON.parse(content) as Answer;
+    return parsed;
+  }
+}
+
 export class TestModelBoundary implements ModelBoundary {
   private fixtures: FixtureMapping;
 
