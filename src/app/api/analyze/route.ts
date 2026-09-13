@@ -32,33 +32,45 @@ Operating state: ${operatingState}`;
       body: JSON.stringify({
         model: modelSlug,
         messages: [{ role: 'user', content: prompt }],
-        response_format: { type: 'json_object' },
       }),
     });
 
     if (!response.ok) {
       const error = await response.text();
+      console.error('OpenRouter error:', error);
       return NextResponse.json(
-        { error: `OpenRouter error: ${error}` },
+        { error: `OpenRouter API error (${response.status}): ${error.substring(0, 200)}` },
         { status: response.status }
       );
     }
 
-    const data = await response.json() as { choices: Array<{ message: { content: string } }> };
-    const content = data.choices[0]?.message?.content;
+    const data = (await response.json()) as Record<string, unknown>;
+    const choices = data.choices as Array<{ message: { content: string } }> | undefined;
+    const content = choices?.[0]?.message?.content;
+
     if (!content) {
+      console.error('No content in response:', data);
       return NextResponse.json(
-        { error: 'No response from OpenRouter' },
+        { error: 'No response content from OpenRouter' },
         { status: 500 }
       );
     }
 
-    const analysis = JSON.parse(content);
-    return NextResponse.json(analysis);
+    try {
+      const analysis = JSON.parse(content);
+      return NextResponse.json(analysis);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError, 'Content:', content.substring(0, 500));
+      return NextResponse.json(
+        { error: `Failed to parse model response: ${parseError instanceof Error ? parseError.message : 'unknown'}` },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('API route error:', message);
     return NextResponse.json(
-      { error: `Failed to analyze contract: ${message}` },
+      { error: `API error: ${message}` },
       { status: 500 }
     );
   }
