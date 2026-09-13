@@ -116,10 +116,18 @@ export default function NewReview() {
   };
 
   const handleAnswerQuestion = async (question: string): Promise<Answer> => {
-    if (!testBoundary || !documentText) {
-      throw new Error("Document or test boundary not available");
+    if (!documentText) {
+      throw new Error("Document not available");
     }
-    return answerFromDocument(documentText, question, testBoundary);
+    const response = await fetch('/api/answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ documentText, question }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to get answer');
+    }
+    return response.json();
   };
 
   const handleAddRedLine = () => {
