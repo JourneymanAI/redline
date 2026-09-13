@@ -59,40 +59,23 @@ export default function NewReview() {
     setSuccess(false);
 
     try {
-      // Try production API first, fall back to fixtures
-      let analysis: Analysis;
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documentText: trimmed,
+          redLines,
+          governingLawState,
+          operatingState,
+        }),
+      });
 
-      try {
-        const response = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            documentText: trimmed,
-            redLines,
-            governingLawState,
-            operatingState,
-          }),
-        });
-
-        if (response.ok) {
-          analysis = await response.json();
-        } else {
-          throw new Error(`API error: ${response.statusText}`);
-        }
-      } catch (_err) {
-        // Fall back to test fixtures
-        const fixtureAnalysis = getFixtureResponse(trimmed);
-        const fixtureMapping: { [key: string]: { analysis?: Analysis } } = {
-          [`analyze:${trimmed.substring(0, 50)}`]: { analysis: fixtureAnalysis },
-        };
-        const testBoundary = new TestModelBoundary(fixtureMapping);
-        analysis = await analyzeContract(
-          { documentText: trimmed, redLines, governingLawState, operatingState },
-          testBoundary
-        );
-        setTestBoundary(testBoundary);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: response.statusText }));
+        throw new Error(errorData.error || `API error: ${response.status}`);
       }
 
+      const analysis = await response.json();
       setAnalysis(analysis);
       setSuccess(true);
     } catch (err) {
