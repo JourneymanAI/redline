@@ -4,10 +4,10 @@ import { useState } from "react";
 import styles from "./page.module.css";
 import { ResultScreen } from "@/components/ResultScreen";
 import { QASection } from "@/components/QASection";
-import { analyzeContract, answerFromDocument } from "@/lib/analysis";
+import { analyzeContract } from "@/lib/analysis";
 import { getFixtureResponse } from "@/lib/fixture-responses";
-import { TestModelBoundary, OpenRouterBoundary } from "@/lib/model-boundary";
-import { Analysis, Answer, ModelBoundary } from "@/lib/model-boundary";
+import { TestModelBoundary } from "@/lib/model-boundary";
+import { Analysis, Answer } from "@/lib/model-boundary";
 
 // All 50 US states in alphabetical order
 const US_STATES = [
@@ -59,37 +59,41 @@ export default function NewReview() {
     setSuccess(false);
 
     try {
-      // Determine which model boundary to use
-      let modelBoundary: ModelBoundary;
+      // Try production API first, fall back to fixtures
+      let analysis: Analysis;
 
-      if (process.env.NEXT_PUBLIC_OPENROUTER_API_KEY && process.env.NEXT_PUBLIC_OPENROUTER_MODEL) {
-        // Use production OpenRouter boundary
-        modelBoundary = new OpenRouterBoundary(
-          process.env.NEXT_PUBLIC_OPENROUTER_API_KEY,
-          process.env.NEXT_PUBLIC_OPENROUTER_MODEL
-        );
-      } else {
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            documentText: trimmed,
+            redLines,
+            governingLawState,
+            operatingState,
+          }),
+        });
+
+        if (response.ok) {
+          analysis = await response.json();
+        } else {
+          throw new Error(`API error: ${response.statusText}`);
+        }
+      } catch (_err) {
         // Fall back to test fixtures
         const fixtureAnalysis = getFixtureResponse(trimmed);
         const fixtureMapping: { [key: string]: { analysis?: Analysis } } = {
           [`analyze:${trimmed.substring(0, 50)}`]: { analysis: fixtureAnalysis },
         };
-        modelBoundary = new TestModelBoundary(fixtureMapping);
+        const testBoundary = new TestModelBoundary(fixtureMapping);
+        analysis = await analyzeContract(
+          { documentText: trimmed, redLines, governingLawState, operatingState },
+          testBoundary
+        );
+        setTestBoundary(testBoundary);
       }
 
-      // Call analyzeContract with the selected boundary
-      const result = await analyzeContract(
-        {
-          documentText: trimmed,
-          redLines,
-          governingLawState,
-          operatingState,
-        },
-        modelBoundary
-      );
-
-      setAnalysis(result);
-      setTestBoundary(modelBoundary instanceof TestModelBoundary ? modelBoundary : null);
+      setAnalysis(analysis);
       setSuccess(true);
     } catch (err) {
       const errorMessage =
