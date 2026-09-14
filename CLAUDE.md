@@ -17,14 +17,26 @@ of their past documents. Build those six things and nothing else.
   its source sentence is a bug, not a weaker result.
 - State only what the document says — summaries, flags, and counter-offers alike. If
   the text does not support a claim, do not make it.
+- **Color scheme: lawyerly professional (navy #1a2d4d, white, grays).** Never revert to
+  dark terminal theme. See `src/app/globals.css` for palette. Establishes legal-app
+  brand and supports demo credibility.
 
 ## Scope
 
-- If something looks like the obvious next step and is not one of the six
-  capabilities above, ask before building it.
-- Excluded on purpose — do not build and do not quietly add: payments, billing, OCR
-  for scanned documents, sharing a document between users. OCR is not a "later"
-  feature: a citation is worthless when the text it points at was misread.
+### MVP (Current)
+
+Five of the original six capabilities. Excluding: **library of past documents** (user
+history / contract archive). Single-analysis flow only. Rationale: keeps product lean
+for demo, lets focus stay on core UX before adding persistence.
+
+**When history lands (v2):** Design Supabase schema first. Questions: retention
+policy? Search/filter? Sharing? File as separate tickets.
+
+### Excluded on Purpose
+
+Do not build and do not quietly add: payments, billing, OCR for scanned documents,
+sharing a document between users. OCR is not a "later" feature: a citation is
+worthless when the text it points at was misread.
 
 ## Standing rules — do this
 
@@ -57,6 +69,17 @@ of their past documents. Build those six things and nothing else.
 
 This folder is its own git repo (remote: `JourneymanAI/redline`) nested inside the
 `job-search-os` tree. Never stage or commit Redline files into the parent repo.
+
+## Architecture & Learning
+
+**Tech stack guide:** [redline-tech-stack.html](https://claude.ai/code/artifact/ee402133-e63a-492b-a2fd-81ab42c2523e)
+Full-stack breakdown: why each service exists, top alternatives, cost, interactions,
+and questions to explore next. Read it to understand the stack and learn the
+competitive landscape of hosting, auth/DB, and LLM APIs.
+
+**Design system:** DESIGN.md is deferred. Pick it up when visual polish matters more
+than core features. Should document: component library, spacing scale, typography,
+interaction patterns, accessibility specs.
 
 ## Open only when they matter
 
