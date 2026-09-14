@@ -88,7 +88,6 @@ Operating state: ${input.operatingState}`;
       body: JSON.stringify({
         model: this.modelSlug,
         messages: [{ role: 'user', content: prompt }],
-        response_format: { type: 'json_object' },
       }),
       keepalive: false,
     });
@@ -130,7 +129,6 @@ If the document doesn't address the question, set addressed: false and explain t
       body: JSON.stringify({
         model: this.modelSlug,
         messages: [{ role: 'user', content: prompt }],
-        response_format: { type: 'json_object' },
       }),
       keepalive: false,
     });

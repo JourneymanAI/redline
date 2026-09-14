@@ -53,7 +53,6 @@ Operating state: ${operatingState}`;
           body: JSON.stringify({
             model: modelSlug,
             messages: [{ role: 'user', content: prompt }],
-            response_format: { type: 'json_object' },
           }),
           keepalive: false,
         });

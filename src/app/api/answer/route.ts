@@ -32,7 +32,6 @@ If the document doesn't address the question, set addressed: false and explain t
       body: JSON.stringify({
         model: modelSlug,
         messages: [{ role: 'user', content: prompt }],
-        response_format: { type: 'json_object' },
       }),
       keepalive: false,
     });
