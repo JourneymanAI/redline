@@ -34,6 +34,7 @@ If the document doesn't address the question, set addressed: false and explain t
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' },
       }),
+      keepalive: false,
     });
 
     if (!response.ok) {

@@ -31,6 +31,7 @@ Operating state: ${operatingState}`;
     try {
       const testRes = await fetch('https://openrouter.io/api/v1/models', {
         headers: { 'Authorization': `Bearer ${apiKey}` },
+        keepalive: false,
       });
       console.log('[/api/analyze] Connectivity test status:', testRes.status);
     } catch (testErr) {
@@ -54,6 +55,7 @@ Operating state: ${operatingState}`;
             messages: [{ role: 'user', content: prompt }],
             response_format: { type: 'json_object' },
           }),
+          keepalive: false,
         });
         console.log('[/api/analyze] OpenRouter response status:', response.status);
         break;
