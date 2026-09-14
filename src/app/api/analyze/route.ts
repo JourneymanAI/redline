@@ -27,6 +27,16 @@ Red lines: ${redLines?.join(', ') || 'none'}
 Governing law: ${governingLawState}
 Operating state: ${operatingState}`;
 
+    console.log('[/api/analyze] Testing OpenRouter connectivity...');
+    try {
+      const testRes = await fetch('https://openrouter.io/api/v1/models', {
+        headers: { 'Authorization': `Bearer ${apiKey}` },
+      });
+      console.log('[/api/analyze] Connectivity test status:', testRes.status);
+    } catch (testErr) {
+      console.error('[/api/analyze] Connectivity test failed:', testErr instanceof Error ? testErr.message : String(testErr));
+    }
+
     console.log('[/api/analyze] Calling OpenRouter with model:', modelSlug);
 
     let response;
