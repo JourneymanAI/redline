@@ -28,19 +28,39 @@ Governing law: ${governingLawState}
 Operating state: ${operatingState}`;
 
     console.log('[/api/analyze] Calling OpenRouter with model:', modelSlug);
-    const response = await fetch('https://openrouter.io/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: modelSlug,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
 
-    console.log('[/api/analyze] OpenRouter response status:', response.status);
+    let response;
+    let lastError: Error | null = null;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: modelSlug,
+            messages: [{ role: 'user', content: prompt }],
+            response_format: { type: 'json_object' },
+          }),
+        });
+        console.log('[/api/analyze] OpenRouter response status:', response.status);
+        break;
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        console.error(`[/api/analyze] Attempt ${attempt}/3 failed:`, lastError.message);
+        if (attempt < 3) {
+          const delay = Math.pow(2, attempt - 1) * 100;
+          console.log(`[/api/analyze] Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+
+    if (!response) {
+      throw lastError || new Error('Failed to connect to OpenRouter after 3 attempts');
+    }
 
     if (!response.ok) {
       const error = await response.text();
