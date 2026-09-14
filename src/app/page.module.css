@@ -20,11 +20,11 @@
 
 .signIn {
   font-size: 13px;
-  color: var(--worn-card-stock);
+  color: var(--legal-navy);
 }
 
 .signIn:hover {
-  color: var(--split-flap-cream);
+  text-decoration: underline;
 }
 
 .hero {
@@ -44,7 +44,7 @@
 .subhead {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray);
 }
 
 .contrast {
@@ -66,7 +66,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
   margin-bottom: 12px;
 }
 
@@ -77,15 +77,15 @@
   padding: 20px 4px;
   font-size: 15px;
   line-height: 1.7;
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray);
 }
 
 /* After: one live Gate Board row, same component family as the result
-   screen (bordered rectangle, Terminal Night Raised, housing-seam rule). */
+   screen (bordered rectangle, light off-white, gray border). */
 .after {
   flex: 1;
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
   padding: 4px 0;
 }
@@ -107,7 +107,7 @@
 }
 
 .row:hover {
-  background: #ffffff10;
+  background: var(--legal-off-white);
 }
 
 .sevLabel {
@@ -115,16 +115,16 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--gate-change-red);
+  color: var(--legal-accent-red);
   padding-top: 2px;
 }
 
 .sevLabelPush {
-  color: var(--delayed-amber);
+  color: var(--legal-warning-amber);
 }
 
 .sevLabelNote {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 .clauseCol {
@@ -138,16 +138,17 @@
   font-family: var(--font-board);
   font-size: 15px;
   font-weight: 500;
+  color: var(--legal-navy);
 }
 
 .why {
   font-size: 13px;
   line-height: 1.5;
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray);
 }
 
 .chev {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
   transition: transform 0.2s ease;
   padding-top: 4px;
 }
@@ -174,7 +175,7 @@
 
 .detailContent {
   padding: 4px 16px 20px 84px;
-  border-top: 1px solid var(--housing-seam);
+  border-top: 1px solid var(--legal-gray-border);
   margin-top: 4px;
   padding-top: 16px;
   display: grid;
@@ -187,41 +188,43 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
   margin-bottom: 6px;
 }
 
 .quote {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--split-flap-cream);
+  color: var(--legal-gray);
+  font-style: italic;
 }
 
 .counter {
   font-size: 14px;
   line-height: 1.6;
   margin-bottom: 10px;
+  color: var(--legal-gray);
 }
 
 .copyBtn {
   font-family: var(--font-body);
   font-size: 13px;
   background: transparent;
-  border: 1px solid var(--housing-seam);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
-  color: var(--split-flap-cream);
+  color: var(--legal-navy);
   padding: 8px 14px;
   cursor: pointer;
 }
 
 .copyBtn:hover {
-  border-color: var(--worn-card-stock);
-  background: #ffffff10;
+  border-color: var(--legal-navy);
+  background: var(--legal-off-white);
 }
 
 .copyBtnCopied {
-  border-color: var(--delayed-amber);
-  color: var(--delayed-amber);
+  border-color: var(--legal-warning-amber);
+  color: var(--legal-warning-amber);
 }
 
 .ctaRow {
@@ -235,20 +238,22 @@
   align-items: center;
   font-family: var(--font-body);
   font-size: 15px;
-  background: transparent;
-  border: 1px solid var(--worn-card-stock);
+  background: var(--legal-navy);
+  border: 1px solid var(--legal-navy);
   border-radius: var(--radius);
-  color: var(--split-flap-cream);
-  padding: 12px 18px;
+  color: var(--legal-white);
+  padding: 12px 24px;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .cta:hover {
-  border-color: var(--split-flap-cream);
+  background: var(--legal-navy-light);
+  border-color: var(--legal-navy-light);
 }
 
 .teaser {
-  border-top: 1px solid var(--housing-seam);
+  border-top: 1px solid var(--legal-gray-border);
   padding-top: 28px;
 }
 
@@ -258,25 +263,25 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
   margin-bottom: 16px;
 }
 
 .teaserBoard {
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
 }
 
 .teaserBoard > div + div > button {
-  border-top: 1px solid var(--housing-seam);
+  border-top: 1px solid var(--legal-gray-border);
 }
 
 .footnote {
   margin-top: 44px;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 @media (max-width: 760px) {

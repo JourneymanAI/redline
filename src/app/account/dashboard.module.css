@@ -1,0 +1,137 @@
+.page {
+  min-height: 100vh;
+  background: var(--legal-white);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px;
+  border-bottom: 1px solid var(--legal-gray-border);
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.wordmark {
+  font-family: var(--font-board);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--legal-navy);
+}
+
+.signOutBtn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--legal-gray-border);
+  border-radius: var(--radius);
+  color: var(--legal-gray);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.signOutBtn:hover {
+  border-color: var(--legal-navy);
+  color: var(--legal-navy);
+  background: var(--legal-off-white);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 88px 28px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome {
+  margin-bottom: 44px;
+}
+
+.heading {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--legal-navy);
+  margin-bottom: 12px;
+}
+
+.email {
+  font-family: var(--font-board);
+  font-size: 13px;
+  color: var(--legal-gray-light);
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+}
+
+.description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--legal-gray);
+}
+
+.analyzeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  background: var(--legal-navy);
+  border: 1px solid var(--legal-navy);
+  border-radius: var(--radius);
+  color: var(--legal-white);
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  min-width: 280px;
+}
+
+.analyzeButton:hover {
+  background: var(--legal-navy-light);
+  border-color: var(--legal-navy-light);
+  text-decoration: none;
+}
+
+.analyzeButton:focus-visible {
+  outline: 2px solid var(--legal-navy);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .header {
+    padding: 20px 16px;
+  }
+
+  .content {
+    padding: 60px 16px;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .analyzeButton {
+    width: 100%;
+    min-width: unset;
+  }
+}

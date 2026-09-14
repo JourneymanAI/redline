@@ -1,17 +1,16 @@
 :root {
-  --terminal-night: #0f1115;
-  --terminal-night-raised: #171a1f;
-  --split-flap-cream: #f5f2ea;
-  --split-flap-cream-dimmed: #f5f2ea99;
-  --worn-card-stock: #b0aa98;
-  --housing-seam: #2b2f36;
-  --gate-change-red: #d94f30;
-  --alert-ink: #2a0d06;
-  --delayed-amber: #c8862b;
-  --focus-gold: #e8c14d;
-  --hover-wash: #ffffff10;
+  --legal-navy: #1a2d4d;
+  --legal-navy-light: #2d4a7a;
+  --legal-white: #ffffff;
+  --legal-off-white: #f8f7f5;
+  --legal-gray: #5a5a5a;
+  --legal-gray-light: #a8a8a8;
+  --legal-gray-border: #d4d4d4;
+  --legal-accent-red: #b8232b;
+  --legal-accent-gold: #9b7d47;
+  --legal-warning-amber: #d97a2d;
 
-  --radius: 2px;
+  --radius: 3px;
   --font-board: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -24,7 +23,7 @@
 
 html {
   height: 100%;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
@@ -35,8 +34,8 @@ body {
 
 body {
   min-height: 100%;
-  background: var(--terminal-night);
-  color: var(--split-flap-cream);
+  background: var(--legal-white);
+  color: var(--legal-gray);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
@@ -45,40 +44,46 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--legal-navy);
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 ::selection {
-  background: var(--gate-change-red);
-  color: var(--split-flap-cream);
+  background: var(--legal-accent-red);
+  color: var(--legal-white);
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus-gold);
+  outline: 2px solid var(--legal-navy);
   outline-offset: 2px;
 }
 
 /* Form elements */
 input,
 textarea {
-  background-color: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background-color: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
   padding: 12px 14px;
-  color: var(--split-flap-cream);
+  color: var(--legal-gray);
   font-family: inherit;
   font-size: 14px;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 input:focus,
 textarea:focus {
-  border-color: var(--split-flap-cream);
+  border-color: var(--legal-navy);
+  background-color: var(--legal-white);
+  outline: none;
 }
 
 button {
@@ -86,38 +91,44 @@ button {
   cursor: pointer;
   border-radius: var(--radius);
   background: transparent;
-  color: var(--split-flap-cream);
+  color: var(--legal-navy);
   font-size: 14px;
 }
 
 /* Button styles */
 .btn-primary {
-  border: 1px solid var(--worn-card-stock);
+  border: 1px solid var(--legal-navy);
   padding: 0 18px;
   height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: var(--legal-navy);
+  color: var(--legal-white);
+  font-weight: 500;
 }
 
 .btn-primary:hover {
-  border-color: var(--split-flap-cream);
+  background: var(--legal-navy-light);
+  border-color: var(--legal-navy-light);
 }
 
 .btn-primary:disabled {
-  border-color: var(--housing-seam);
-  opacity: 0.4;
+  border-color: var(--legal-gray-light);
+  background: var(--legal-gray-light);
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .btn-ghost {
-  border: 1px solid var(--housing-seam);
+  border: 1px solid var(--legal-gray-border);
   padding: 8px 14px;
+  color: var(--legal-navy);
 }
 
 .btn-ghost:hover {
-  background-color: var(--hover-wash);
-  border-color: var(--worn-card-stock);
+  background-color: var(--legal-off-white);
+  border-color: var(--legal-navy);
 }
 
 /* Utility classes */
@@ -126,19 +137,19 @@ button {
 }
 
 .text-dimmed {
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray-light);
 }
 
 .text-secondary {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 .text-blocker {
-  color: var(--gate-change-red);
+  color: var(--legal-accent-red);
 }
 
 .text-push {
-  color: var(--delayed-amber);
+  color: var(--legal-warning-amber);
 }
 
 /* Layout */

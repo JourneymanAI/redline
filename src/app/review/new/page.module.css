@@ -26,7 +26,7 @@
 .description {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray);
 }
 
 .formSection {
@@ -47,14 +47,14 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 .textarea {
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
-  color: var(--split-flap-cream);
+  color: var(--legal-gray);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
@@ -64,46 +64,48 @@
 }
 
 .textarea::placeholder {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 .textarea:focus {
-  outline: 2px solid var(--focus-gold);
-  outline-offset: 2px;
+  border-color: var(--legal-navy);
+  outline: none;
+  background: var(--legal-white);
 }
 
 .error {
   padding: 12px 14px;
-  background: rgba(217, 79, 48, 0.1);
-  border: 1px solid var(--gate-change-red);
+  background: rgba(184, 35, 43, 0.08);
+  border: 1px solid var(--legal-accent-red);
   border-radius: var(--radius);
-  color: var(--gate-change-red);
+  color: var(--legal-accent-red);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .success {
   padding: 12px 14px;
-  background: rgba(200, 134, 43, 0.1);
-  border: 1px solid var(--delayed-amber);
+  background: rgba(155, 125, 71, 0.08);
+  border: 1px solid var(--legal-accent-gold);
   border-radius: var(--radius);
-  color: var(--delayed-amber);
+  color: var(--legal-accent-gold);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .notice {
   padding: 14px 16px;
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
   font-size: 13px;
   line-height: 1.6;
-  color: var(--split-flap-cream-dimmed);
+  color: var(--legal-gray);
 }
 
 .notice strong {
-  color: var(--split-flap-cream);
+  color: var(--legal-navy);
+  font-weight: 600;
 }
 
 .actions {
@@ -115,21 +117,23 @@
 .submitBtn {
   font-family: var(--font-body);
   font-size: 14px;
-  background: transparent;
-  border: 1px solid var(--worn-card-stock);
+  background: var(--legal-navy);
+  border: 1px solid var(--legal-navy);
   border-radius: var(--radius);
-  color: var(--split-flap-cream);
+  color: var(--legal-white);
   padding: 12px 18px;
   cursor: pointer;
   transition: all 0.15s ease;
+  font-weight: 500;
 }
 
 .submitBtn:hover {
-  border-color: var(--split-flap-cream);
+  background: var(--legal-navy-light);
+  border-color: var(--legal-navy-light);
 }
 
 .submitBtn:focus-visible {
-  outline: 2px solid var(--focus-gold);
+  outline: 2px solid var(--legal-navy);
   outline-offset: 2px;
 }
 
@@ -137,22 +141,22 @@
   font-family: var(--font-body);
   font-size: 14px;
   background: transparent;
-  border: 1px solid var(--housing-seam);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
-  color: var(--worn-card-stock);
+  color: var(--legal-gray);
   padding: 12px 18px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .clearBtn:hover {
-  border-color: var(--split-flap-cream);
-  color: var(--split-flap-cream);
-  background: #ffffff10;
+  border-color: var(--legal-navy);
+  color: var(--legal-navy);
+  background: var(--legal-off-white);
 }
 
 .clearBtn:focus-visible {
-  outline: 2px solid var(--focus-gold);
+  outline: 2px solid var(--legal-navy);
   outline-offset: 2px;
 }
 
@@ -161,20 +165,21 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
   font-size: 13px;
 }
 
 .infoLabel {
-  color: var(--worn-card-stock);
+  color: var(--legal-gray-light);
 }
 
 .infoValue {
   font-family: var(--font-board);
   font-size: 13px;
-  color: var(--split-flap-cream);
+  color: var(--legal-navy);
+  font-weight: 500;
 }
 
 .stateSelectsGroup {
@@ -190,10 +195,10 @@
 }
 
 .select {
-  background: var(--terminal-night-raised);
-  border: 1px solid var(--housing-seam);
+  background: var(--legal-off-white);
+  border: 1px solid var(--legal-gray-border);
   border-radius: var(--radius);
-  color: var(--split-flap-cream);
+  color: var(--legal-gray);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
@@ -203,21 +208,24 @@
 }
 
 .select:hover {
-  border-color: var(--worn-card-stock);
+  border-color: var(--legal-navy);
 }
 
 .select:focus {
-  outline: 2px solid var(--focus-gold);
-  outline-offset: 2px;
+  border-color: var(--legal-navy);
+  outline: none;
+  background: var(--legal-white);
 }
 
 .select:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  background: var(--legal-gray-border);
 }
 
 .required {
-  color: var(--gate-change-red);
+  color: var(--legal-accent-red);
+  font-weight: 600;
 }
 
 @media (max-width: 760px) {

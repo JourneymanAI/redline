@@ -127,10 +127,9 @@ export default function Home() {
       </div>
 
       <div className={styles.hero}>
-        <h1 className={styles.headline}>The same sentence. Read two ways.</h1>
+        <h1 className={styles.headline}>Spot the gotchas in your contract agreements before you sign on the dotted line</h1>
         <p className={styles.subhead}>
-          Paste a contract, and every clause that works against you gets
-          flagged, ranked, and traced back to the exact words it came from.
+          Paste any contract and get every clause that works against you—flagged, ranked, and traced back to the exact words. Know what you're signing before you put pen to paper.
         </p>
       </div>
 
