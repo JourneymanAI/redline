@@ -103,7 +103,11 @@ Operating state: ${input.operatingState}`;
       throw new Error('No response from OpenRouter');
     }
 
-    const parsed = JSON.parse(content) as Analysis;
+    let jsonString = content;
+    if (content.includes('```')) {
+      jsonString = content.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+    }
+    const parsed = JSON.parse(jsonString) as Analysis;
     return parsed;
   }
 
@@ -144,7 +148,11 @@ If the document doesn't address the question, set addressed: false and explain t
       throw new Error('No response from OpenRouter');
     }
 
-    const parsed = JSON.parse(content) as Answer;
+    let jsonString = content;
+    if (content.includes('```')) {
+      jsonString = content.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+    }
+    const parsed = JSON.parse(jsonString) as Answer;
     return parsed;
   }
 }

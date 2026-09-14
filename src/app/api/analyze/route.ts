@@ -97,7 +97,11 @@ Operating state: ${operatingState}`;
     }
 
     try {
-      const analysis = JSON.parse(content);
+      let jsonString = content;
+      if (content.includes('```')) {
+        jsonString = content.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+      }
+      const analysis = JSON.parse(jsonString);
       console.log('[/api/analyze] Successfully parsed analysis');
       return NextResponse.json(analysis);
     } catch (parseError) {

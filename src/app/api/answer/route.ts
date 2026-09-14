@@ -53,7 +53,11 @@ If the document doesn't address the question, set addressed: false and explain t
       );
     }
 
-    const answer = JSON.parse(content);
+    let jsonString = content;
+    if (content.includes('```')) {
+      jsonString = content.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+    }
+    const answer = JSON.parse(jsonString);
     return NextResponse.json(answer);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
