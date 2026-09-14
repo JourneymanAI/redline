@@ -1,15 +1,15 @@
-# Redline — CLAUDE.md
+# ReviewIt — CLAUDE.md
 
-Redline is a web app. Someone uploads a contract, lease, freelance agreement, or
-terms of service and gets back: a plain-English summary; the clauses that could hurt
-them, ranked by severity, each shown with its exact source sentence; a drafted
-counter-offer per flagged clause; a question box answered only from the document; an
-editable list of the user's own "red lines" that drives the analysis; and a library
-of their past documents. Build those six things and nothing else.
+ReviewIt is a quick contract review tool for freelancers, small business owners, and gig
+workers. Someone pastes a contract, lease, freelance agreement, or terms of service and
+gets back in seconds: the clauses that could hurt them, ranked by severity, each shown
+with its exact source sentence; a drafted counter-offer per flagged clause; and a
+question box answered only from the document. MVP scope: three of the original six
+capabilities. Future: editable "red lines" list and user library.
 
 ## Settled — not open for reinterpretation
 
-- Next.js (App Router), Supabase for auth + database, deployed on Vercel.
+- Next.js (App Router), Supabase for auth + database, deployed on Vercel at reviewit.ai.
 - The uploaded file is parsed to text in the browser. The file itself is never sent
   to the server or stored. Only the extracted text is persisted.
 - All model calls go through OpenRouter, server-side, key from `.env.local`.
@@ -17,20 +17,22 @@ of their past documents. Build those six things and nothing else.
   its source sentence is a bug, not a weaker result.
 - State only what the document says — summaries, flags, and counter-offers alike. If
   the text does not support a claim, do not make it.
+- **Branding: "ReviewIt" — fast, accessible, no jargon.** Target is freelancers and SMBs,
+  not general counsel. Position as quick check for red flags, not legal advice.
 - **Color scheme: lawyerly professional (navy #1a2d4d, white, grays).** Never revert to
-  dark terminal theme. See `src/app/globals.css` for palette. Establishes legal-app
-  brand and supports demo credibility.
+  dark terminal theme. See `src/app/globals.css` for palette. Establishes credibility.
 
 ## Scope
 
 ### MVP (Current)
 
-Five of the original six capabilities. Excluding: **library of past documents** (user
-history / contract archive). Single-analysis flow only. Rationale: keeps product lean
-for demo, lets focus stay on core UX before adding persistence.
+Three core capabilities (risk flags, counter-offers, Q&A). Excluding: **plain-English
+summary**, **editable red lines list**, and **library of past documents** (user history /
+contract archive). Single-analysis flow only. Rationale: keeps product lean for demo,
+lets focus stay on core UX and red-flag accuracy before adding persistence layers.
 
-**When history lands (v2):** Design Supabase schema first. Questions: retention
-policy? Search/filter? Sharing? File as separate tickets.
+**When v2 lands:** Add summary engine (plain English). Then the red lines editor.
+History/library is v3.
 
 ### Excluded on Purpose
 

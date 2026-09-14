@@ -18,6 +18,21 @@
   letter-spacing: 0.02em;
 }
 
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navLink {
+  font-size: 13px;
+  color: var(--legal-navy);
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
 .signIn {
   font-size: 13px;
   color: var(--legal-navy);

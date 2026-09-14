@@ -17,7 +17,7 @@ export default async function DashboardPage() {
   return (
     <main className={styles.page}>
       <div className={styles.header}>
-        <div className={styles.wordmark}>REDLINE</div>
+        <div className={styles.wordmark}>ReviewIt</div>
         <form action={logout}>
           <button className={styles.signOutBtn} type="submit">
             Sign out

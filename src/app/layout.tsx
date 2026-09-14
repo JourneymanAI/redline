@@ -9,9 +9,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Redline — read it before you sign it",
+  title: "ReviewIt — spot contract red flags in seconds",
   description:
-    "Paste a contract and see every clause that works against you, ranked, sourced, and ready to push back on.",
+    "Quick contract review for freelancers, small business owners, and gig workers. Paste any agreement and see every clause that could hurt you—ranked, sourced, and ready to negotiate.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Navigation from "@/components/Navigation";
 import styles from "./page.module.css";
 import { ResultScreen } from "@/components/ResultScreen";
 import { QASection } from "@/components/QASection";
@@ -139,9 +140,11 @@ export default function NewReview() {
 
   if (analysis) {
     return (
-      <main className={styles.page}>
-        <div className={styles.container}>
-          <ResultScreen analysis={analysis} />
+      <>
+        <Navigation isLoggedIn />
+        <main className={styles.page}>
+          <div className={styles.container}>
+            <ResultScreen analysis={analysis} />
           <QASection documentText={documentText} onAnswer={handleAnswerQuestion} />
           <div className={styles.actions} style={{ marginTop: "44px" }}>
             <button
@@ -153,12 +156,15 @@ export default function NewReview() {
             </button>
           </div>
         </div>
-      </main>
+        </main>
+      </>
     );
   }
 
   return (
-    <main className={styles.page}>
+    <>
+      <Navigation isLoggedIn />
+      <main className={styles.page}>
       <div className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>Paste your contract</h1>
@@ -343,5 +349,6 @@ export default function NewReview() {
         )}
       </div>
     </main>
+    </>
   );
 }

@@ -1,0 +1,66 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 28px;
+  border-bottom: 1px solid var(--legal-gray-border);
+}
+
+.wordmark {
+  font-family: var(--font-board);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--legal-navy);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.wordmark:hover {
+  opacity: 0.8;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--legal-navy);
+  text-decoration: none;
+  transition: text-decoration 0.15s ease;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.signIn {
+  font-size: 13px;
+  color: var(--legal-navy);
+  text-decoration: none;
+  transition: text-decoration 0.15s ease;
+}
+
+.signIn:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .nav {
+    padding: 20px 16px;
+  }
+
+  .links {
+    gap: 16px;
+  }
+
+  .link,
+  .signIn {
+    font-size: 12px;
+  }
+}

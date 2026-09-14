@@ -120,16 +120,21 @@ export default function Home() {
   return (
     <main className={styles.page}>
       <div className={styles.nav}>
-        <div className={styles.wordmark}>REDLINE</div>
-        <Link className={styles.signIn} href="/login">
-          Sign in
-        </Link>
+        <div className={styles.wordmark}>ReviewIt</div>
+        <div className={styles.navLinks}>
+          <Link className={styles.navLink} href="/resources">
+            Resources
+          </Link>
+          <Link className={styles.signIn} href="/login">
+            Sign in
+          </Link>
+        </div>
       </div>
 
       <div className={styles.hero}>
-        <h1 className={styles.headline}>Spot the gotchas in your contract agreements before you sign on the dotted line</h1>
+        <h1 className={styles.headline}>Spot contract red flags in seconds</h1>
         <p className={styles.subhead}>
-          Paste any contract and get every clause that works against you—flagged, ranked, and traced back to the exact words. Know what you're signing before you put pen to paper.
+          For freelancers, contractors, and small business owners who sign agreements without legal counsel. Paste any contract and ReviewIt flags every clause that could hurt you—ranked by risk, traced to the exact words, ready to negotiate.
         </p>
       </div>
 
@@ -144,7 +149,7 @@ export default function Home() {
         </div>
 
         <div className={styles.panel}>
-          <div className={styles.panelLabel}>What Redline shows you</div>
+          <div className={styles.panelLabel}>What ReviewIt shows you</div>
           <div className={styles.after}>
             <FlagRow
               severity="BLOCKER"
@@ -186,8 +191,8 @@ export default function Home() {
           />
         </div>
         <p className={styles.footnote}>
-          This contract is synthetic: built to show how Redline reads a
-          document, not a real submission. Redline is pre-launch: creating an
+          This contract is synthetic: built to show how ReviewIt reads a
+          document, not a real submission. ReviewIt is pre-launch: creating an
           account reserves your place, but pasting your own contract isn&apos;t
           live yet.
         </p>

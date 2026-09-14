@@ -1,15 +1,7 @@
 .page {
   max-width: 400px;
   margin: 0 auto;
-  padding: 88px 28px;
-}
-
-.wordmark {
-  font-family: var(--font-board);
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  margin-bottom: 44px;
+  padding: 44px 28px 88px;
 }
 
 .heading {

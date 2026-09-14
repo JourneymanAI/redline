@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Navigation from "@/components/Navigation";
 import { login, signup } from "./actions";
 import styles from "./login.module.css";
 
@@ -11,8 +12,9 @@ export default async function LoginPage({
   const mode = params.mode === "signup" ? "signup" : "login";
 
   return (
-    <main className={styles.page}>
-      <div className={styles.wordmark}>REDLINE</div>
+    <>
+      <Navigation />
+      <main className={styles.page}>
       <h1 className={styles.heading}>
         {mode === "signup" ? "Create an account" : "Sign in"}
       </h1>
@@ -72,6 +74,7 @@ export default async function LoginPage({
           </>
         )}
       </p>
-    </main>
+      </main>
+    </>
   );
 }
