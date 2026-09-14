@@ -79,7 +79,7 @@ Red lines: ${input.redLines.join(', ') || 'none'}
 Governing law: ${input.governingLawState}
 Operating state: ${input.operatingState}`;
 
-    const response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,6 +90,7 @@ Operating state: ${input.operatingState}`;
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' },
       }),
+      keepalive: false,
     });
 
     if (!response.ok) {
@@ -120,7 +121,7 @@ Question: ${input.question}
 
 If the document doesn't address the question, set addressed: false and explain that in the answer field.`;
 
-    const response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -131,6 +132,7 @@ If the document doesn't address the question, set addressed: false and explain t
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' },
       }),
+      keepalive: false,
     });
 
     if (!response.ok) {

@@ -29,7 +29,7 @@ Operating state: ${operatingState}`;
 
     console.log('[/api/analyze] Testing OpenRouter connectivity...');
     try {
-      const testRes = await fetch('https://openrouter.io/api/v1/models', {
+      const testRes = await fetch('https://openrouter.ai/api/v1/models', {
         headers: { 'Authorization': `Bearer ${apiKey}` },
         keepalive: false,
       });
@@ -44,7 +44,7 @@ Operating state: ${operatingState}`;
     let lastError: Error | null = null;
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        response = await fetch('https://openrouter.io/api/v1/chat/completions', {
+        response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
