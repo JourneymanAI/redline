@@ -57,6 +57,27 @@ If the document doesn't address the question, set addressed: false and explain t
     if (content.includes('```')) {
       jsonString = content.replace(/```json\n?/g, '').replace(/```/g, '').trim();
     }
+
+    // Extract JSON object: find first { and match closing }
+    const firstBrace = jsonString.indexOf('{');
+    if (firstBrace !== -1) {
+      let braceCount = 0;
+      let jsonEnd = -1;
+      for (let i = firstBrace; i < jsonString.length; i++) {
+        if (jsonString[i] === '{') braceCount++;
+        if (jsonString[i] === '}') {
+          braceCount--;
+          if (braceCount === 0) {
+            jsonEnd = i + 1;
+            break;
+          }
+        }
+      }
+      if (jsonEnd !== -1) {
+        jsonString = jsonString.substring(firstBrace, jsonEnd);
+      }
+    }
+
     const answer = JSON.parse(jsonString);
     return NextResponse.json(answer);
   } catch (error) {
